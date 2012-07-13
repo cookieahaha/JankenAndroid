@@ -1,5 +1,6 @@
 package me.kukkii.janken;
 
+import me.kukkii.janken.bot.BotManager;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -14,6 +15,21 @@ public class Janken extends Activity
 
   public void hand(View view){
     Button button = (Button) findViewById(R.id.button_BOT);
-    button.setText(((Button)view).getText().toString());
+    Hand userHand = null;
+    int id = view.getId();
+    if(id==R.id.button_ROCK){
+      userHand = Hand.ROCK;
+    }
+    if(id==R.id.button_SCISSOR){
+      userHand = Hand.SCISSOR;
+    }
+    if(id==R.id.button_PAPER){
+      userHand = Hand.PAPER;
+    }
+    Player bot = BotManager.getManager().next();
+    Hand botHand = bot.hand2();
+    Judge judge = new Judge();
+    Result result = judge.judge(userHand, botHand);
+    button.setText(bot.getName() + "\n" + userHand.toString() +"\n" + botHand.toString() + "\n" + result.toString());
   }
 }
