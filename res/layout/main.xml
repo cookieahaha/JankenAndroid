@@ -26,18 +26,21 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_width="0dp"
+            android:onClick="hand" 
             android:text="@string/button_ROCK" />
 
         <Button android:id="@+id/button_SCISSOR"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:onClick="hand" 
             android:text="@string/button_SCISSOR" />
 
         <Button android:id="@+id/button_PAPER"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
+            android:onClick="hand" 
             android:text="@string/button_PAPER" />
     </LinearLayout>
 </LinearLayout>
