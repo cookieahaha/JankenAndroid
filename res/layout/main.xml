@@ -2,12 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    >
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Hello World, Janken"
-    />
+    android:layout_height="fill_parent">
+
+    <Button android:id="@+id/button_AD"
+        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:text="@string/button_AD" />
+
+    <Button android:id="@+id/button_BOT"
+        android:layout_weight="4.5"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:text="@string/button_BOT" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4.5">
+
+        <Button android:id="@+id/button_ROCK"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="@string/button_ROCK" />
+
+        <Button android:id="@+id/button_SCISSOR"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="@string/button_SCISSOR" />
+
+        <Button android:id="@+id/button_PAPER"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="@string/button_PAPER" />
+    </LinearLayout>
 </LinearLayout>
 

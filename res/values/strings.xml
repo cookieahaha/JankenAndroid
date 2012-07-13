@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Janken</string>
+    <string name="button_AD">Ad</string>
+    <string name="button_BOT">bot</string>
+    <string name="button_ROCK">ROCK</string>
+    <string name="button_SCISSOR">SCISSOR</string>
+    <string name="button_PAPER">PAPER</string>
 </resources>
