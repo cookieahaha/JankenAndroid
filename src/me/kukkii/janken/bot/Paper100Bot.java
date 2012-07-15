@@ -3,6 +3,8 @@
 package me.kukkii.janken.bot;
 
 import me.kukkii.janken.Hand;
+import android.graphics.drawable.Drawable;
+import me.kukkii.janken.R;
 
 public class Paper100Bot extends AbstractBot {
 
@@ -18,4 +20,9 @@ public class Paper100Bot extends AbstractBot {
     return Hand.PAPER.value();
   }
 
+  public int getImage(){
+    return R.drawable.girl_orange;
+  }
+
 }
+

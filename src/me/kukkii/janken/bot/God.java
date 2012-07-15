@@ -1,6 +1,9 @@
 // $Id$
 
 package me.kukkii.janken.bot;
+import me.kukkii.janken.R;
+
+import android.graphics.drawable.Drawable;
 
 public class God extends AbstractBot {
 
@@ -22,6 +25,10 @@ public class God extends AbstractBot {
       return hand();
     }
     return (other + 2) % 3;
+  }
+
+  public int getImage(){
+    return R.drawable.girl_yellow;
   }
 
 }

@@ -2,6 +2,10 @@
 
 package me.kukkii.janken.bot;
 
+import me.kukkii.janken.R;
+
+import android.graphics.drawable.Drawable;
+
 public class RandomBot extends AbstractBot {
 
   public RandomBot(){
@@ -15,6 +19,10 @@ public class RandomBot extends AbstractBot {
   public int hand(){
     int bot = (int)(Math.random()*3);
     return bot;
+  }
+
+  public int getImage(){
+    return R.drawable.girl_orange;
   }
 
 }

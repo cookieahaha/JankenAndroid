@@ -7,7 +7,9 @@ package me.kukkii.janken.bot;
 import me.kukkii.janken.AbstractPlayer;
 import me.kukkii.janken.Hand;
 import me.kukkii.janken.Player;
+import me.kukkii.janken.R;
 //import me.kukkii.janken.gui.ImageManager;
+import android.graphics.drawable.Drawable;
 
 abstract public class AbstractBot extends AbstractPlayer {
 
@@ -30,5 +32,7 @@ abstract public class AbstractBot extends AbstractPlayer {
   public int hand(int other) {
     return hand();
   }
+
+  abstract public int getImage();
 
 }

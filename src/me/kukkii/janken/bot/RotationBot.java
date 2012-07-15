@@ -1,6 +1,8 @@
 // $Id$
 
 package me.kukkii.janken.bot;
+import android.graphics.drawable.Drawable;
+import me.kukkii.janken.R;
 
 public class RotationBot extends AbstractBot {
 
@@ -22,6 +24,10 @@ public class RotationBot extends AbstractBot {
       prevHand = (prevHand + 1) % 3;
     }
     return prevHand;
+  }
+ 
+  public int getImage(){
+    return R.drawable.girl_red;
   }
 
 }
