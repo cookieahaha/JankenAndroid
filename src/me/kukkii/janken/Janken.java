@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
+import android.widget.Toast;
 
 public class Janken extends Activity
 {
@@ -14,7 +15,7 @@ public class Janken extends Activity
   }
 
   public void hand(View view){
-    Button button = (Button) findViewById(R.id.button_BOT);
+    // Button button = (Button) findViewById(R.id.button_BOT);
     Hand userHand = null;
     int id = view.getId();
     if(id==R.id.button_ROCK){
@@ -30,6 +31,9 @@ public class Janken extends Activity
     Hand botHand = bot.hand2();
     Judge judge = new Judge();
     Result result = judge.judge(userHand, botHand);
-    button.setText(bot.getName() + "\n" + userHand.toString() +"\n" + botHand.toString() + "\n" + result.toString());
+
+    String text = bot.getName() + "\n" + userHand.toString() +"\n" + botHand.toString() + "\n" + result.toString();
+    // button.setText(text);
+    Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
   }
 }
