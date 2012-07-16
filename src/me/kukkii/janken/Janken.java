@@ -28,8 +28,6 @@ public class Janken extends Activity{
   public void onResume(){
     super.onResume();
     newGame();
-    TimerThread tt = new TimerThread(this);
-    tt.run();
   }
 
   public void afterPon(){
@@ -48,6 +46,9 @@ public class Janken extends Activity{
  //     Drawable drawable = res.getDrawable(drawableId);
       ImageView view = (ImageView) findViewById(R.id.view_BOT);
       view.setImageResource(drawableId); 
+      TimerThread tt = new TimerThread(this);
+      Thread t = new Thread(tt);
+      t.start();
     }
 
     public void jan(){
