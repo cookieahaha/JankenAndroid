@@ -35,5 +35,4 @@ public class TimerThread implements Runnable{
     janken.afterPon();
   }
 
-
 }
