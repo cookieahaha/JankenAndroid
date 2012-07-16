@@ -30,7 +30,7 @@ public class Janken extends Activity{
     newGame();
   }
 
-  public void han(){
+  public void afterPon(){
     botHand = bot.hand2();
     result = judge.judge(userHand, botHand);
     String text = bot.getName() + "\n" + userHand.toString() + "\n" + botHand.toString() + "\n" + result.toString();
@@ -60,7 +60,7 @@ public class Janken extends Activity{
       Toast.makeText(getApplicationContext(), "pon!", Toast.LENGTH_SHORT).show();
     }
 
-    public void afterPon(View view){
+    public void hand(View view){
       userHand = null;
       int id = view.getId();
       if(id==R.id.button_ROCK){
