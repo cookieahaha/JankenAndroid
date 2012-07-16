@@ -28,6 +28,8 @@ public class Janken extends Activity{
   public void onResume(){
     super.onResume();
     newGame();
+    TimerThread tt = new TimerThread(this);
+    tt.run();
   }
 
   public void afterPon(){
