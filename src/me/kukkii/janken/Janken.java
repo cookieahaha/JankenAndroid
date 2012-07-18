@@ -20,9 +20,14 @@ public class Janken extends Activity{
   private Result result;
   private Judge judge = new Judge();
 
+  static SQLiteDatabase mydb;
+
   public void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
+  
+    MySQLiteOpenHelper hlpr = new MySQLiteOpenHelper(getApplicationContext());
+mydb = hlpr.getWritableDatabase();
   }
 
   public void onResume(){
@@ -33,8 +38,11 @@ public class Janken extends Activity{
   public void afterPon(){
     botHand = bot.hand2();
     result = judge.judge(userHand, botHand);
+    ContentValues values = new ContentValues();
+    values.put("data", "result.value()");
+    mydb.insert("mytable", null, values);
     String text = bot.getName() + "\n" + userHand.toString() + "\n" + botHand.toString() + "\n" + result.toString();
-
+    mydb.select("m );
     Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     newGame();
  }
