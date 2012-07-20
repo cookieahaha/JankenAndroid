@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.TextView;
 import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,6 +21,13 @@ public class Janken extends Activity{
   private Result result;
   private Judge judge = new Judge();
   private SQLiteDatabase mydb;
+
+  private static final int timeJan = 2500;
+  private static final int timeKen = 1000;
+  private static final int timePon = 1000;
+  private static final int timeAfterPon = 50;
+  private static final int timeTilNewGame = 2500;
+  private static final int timeTilPon = timeJan + timeKen + timePon;
 
   public void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -40,16 +48,18 @@ public class Janken extends Activity{
     values.put("result", result.value());
     mydb.insert("logtable", null, values);
     String text = bot.getName() + "\n" + userHand.toString() + "\n" + botHand.toString() + "\n" + result.toString();
-    showToastOnUiThread(text, Toast.LENGTH_LONG);
+    showResultOnUiThread(text);
+    sleep(timeTilNewGame);
     newGame();
   }
 
-  public void showToastOnUiThread(String text, int length) {
+  public void showResultOnUiThread(String text) {
     final String text0 = text;
-    final int length0 = length;
+    final TextView view = (TextView) findViewById(R.id.text);
     runOnUiThread(new Runnable() {
       public void run() {
-        Toast.makeText(getApplicationContext(), text0, length0).show();
+        view.setText(text0);
+//        setContentView(view);
       }
     });
   }
@@ -75,7 +85,7 @@ public class Janken extends Activity{
    
      Runnable botRun = new Runnable() {
       public void run() {
-        sleep(4000);
+        sleep(timeTilPon);
         botHand(bot.hand2());
       }
     };
@@ -84,13 +94,13 @@ public class Janken extends Activity{
   }
 
   public void game() {
-    sleep(3000);
+    sleep(timeJan);
     jan();
-    sleep(500);
+    sleep(timeKen);
     ken();
-    sleep(500);
+    sleep(timePon);
     pon();
-    sleep(50);
+    sleep(timeAfterPon);
     afterPon();
   }
 
@@ -103,15 +113,15 @@ public class Janken extends Activity{
   }
 
   public void jan(){
-    showToastOnUiThread("Jan", Toast.LENGTH_SHORT);
+    showResultOnUiThread("Jan");
   }
 
   public void ken(){
-    showToastOnUiThread("Ken", Toast.LENGTH_SHORT);
+    showResultOnUiThread("Ken");
   }
     
   public void pon(){
-    showToastOnUiThread("Pon", Toast.LENGTH_SHORT);
+    showResultOnUiThread("Pon");
   }
 
   public void hand(View view){

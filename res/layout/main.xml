@@ -11,7 +11,12 @@
         android:text="@string/button_AD" />
 
     <ImageView android:id="@+id/view_BOT"
-        android:layout_weight="4.5"
+        android:layout_weight="4"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"/>
+
+    <TextView android:id="@+id/text"
+        android:layout_weight="1"
         android:layout_height="0dp"
         android:layout_width="fill_parent"/>
 
@@ -19,7 +24,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="4.5">
+        android:layout_weight="4">
 
         <ImageButton android:id="@+id/button_ROCK"
             android:layout_height="fill_parent"
