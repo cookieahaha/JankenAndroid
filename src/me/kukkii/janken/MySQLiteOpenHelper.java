@@ -1,6 +1,8 @@
-iimport android.database.sqlite.SQLiteDatabase;
+package me.kukkii.janken;
+
+import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.content.Context;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
@@ -8,14 +10,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     static final int DB_VERSION = 1;                // DBのVersion
  
     // SQL文をStringに保持しておく
-    static String CREATE_TABLE = null;
-    static final String DROP_TABLE = "drop table mytable;";
+    static String CREATE_TABLE = "create table logtable(result INT);";
+    static final String DROP_TABLE = "drop table logtable;";
  
     // コンストラクタ
     // CREATE用のSQLを取得する
-    public MySQLiteOpenHelper(Context mContext, String sql){
+    public MySQLiteOpenHelper(Context mContext){
         super(mContext,DB_NAME,null,DB_VERSION);
-        CREATE_TABLE = sql;
     }
  
     public MySQLiteOpenHelper(Context context, String name,
@@ -35,4 +36,4 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
-}}
+}
