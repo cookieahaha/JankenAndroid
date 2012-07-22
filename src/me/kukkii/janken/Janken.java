@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
+import android.database.Cursor;
 
 public class Janken extends Activity{
 
@@ -38,6 +39,21 @@ public class Janken extends Activity{
     setContentView(R.layout.main);
     MySQLiteOpenHelper hlpr = new MySQLiteOpenHelper(getApplicationContext());
     mydb = hlpr.getWritableDatabase();
+
+    SQLiteDatabase radb = hlpr.getReadableDatabase();
+    Cursor cursor = radb.query("logtable", new String[] {"result"}, null, null, null, null, null, null);
+    while(cursor.moveToNext()){
+      int n = cursor.getInt(1);
+      if(n == Result.WIN.value()){
+        numberOfWin += 1; 
+      }
+      if(n == Result.LOSE.value()){
+        numberOfLose += 1; 
+      }
+      if(n == Result.DRAW.value()){
+        numberOfDraw += 1; 
+      }
+    }
   }
 
   public void onResume(){
@@ -51,7 +67,7 @@ public class Janken extends Activity{
     ContentValues values = new ContentValues();
     values.put("result", result.value());
     mydb.insert("logtable", null, values);
-    String text = bot.getName() + "\n" + userHand.toString() + "\n" + botHand.toString() + "\n" + result.toString() + "\n" + history();
+    String text = bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history();
     showResultOnUiThread(text);
     sleep(timeTilNewGame);
     newGame();
@@ -175,7 +191,7 @@ public class Janken extends Activity{
     if(result == Result.DRAW){
       numberOfDraw += 1;
     }
-    String history = numberOfWin + "win, " + numberOfLose + "lose, " + numberOfDraw + "draw";
+    String history = numberOfWin + " win, " + numberOfLose + " lose, " + numberOfDraw + " draw";
     return history;
   }
 }
