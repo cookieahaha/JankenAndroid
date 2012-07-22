@@ -54,6 +54,12 @@ public class Janken extends Activity{
         numberOfDraw += 1; 
       }
     }
+    radb.close();
+  }
+
+  protected void onDestroy() {
+    super.onDestroy();
+    mydb.close();
   }
 
   public void onResume(){
