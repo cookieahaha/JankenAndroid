@@ -34,10 +34,17 @@ public class Janken extends Activity{
   private static final int timeTilNewGame = 2500;
   private static final int timeTilPon = timeJan + timeKen + timePon;
 
+  private MySQLiteOpenHelper hlpr;
+
   public void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
-    MySQLiteOpenHelper hlpr = new MySQLiteOpenHelper(getApplicationContext());
+  }
+
+  public void onStart(){
+    super.onStart();
+
+    hlpr = new MySQLiteOpenHelper(getApplicationContext());
     mydb = hlpr.getWritableDatabase();
 
     SQLiteDatabase radb = hlpr.getReadableDatabase();
@@ -54,12 +61,11 @@ public class Janken extends Activity{
         numberOfDraw += 1; 
       }
     }
-    radb.close();
   }
 
-  protected void onDestroy() {
-    super.onDestroy();
-    mydb.close();
+  protected void onStop() {
+    super.onStop();
+    hlpr.close();
   }
 
   public void onResume(){
