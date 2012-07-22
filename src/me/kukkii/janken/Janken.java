@@ -22,6 +22,10 @@ public class Janken extends Activity{
   private Judge judge = new Judge();
   private SQLiteDatabase mydb;
 
+  private int numberOfWin = 0;
+  private int numberOfDraw = 0;
+  private int numberOfLose = 0;
+
   private static final int timeJan = 2500;
   private static final int timeKen = 1000;
   private static final int timePon = 1000;
@@ -47,7 +51,7 @@ public class Janken extends Activity{
     ContentValues values = new ContentValues();
     values.put("result", result.value());
     mydb.insert("logtable", null, values);
-    String text = bot.getName() + "\n" + userHand.toString() + "\n" + botHand.toString() + "\n" + result.toString();
+    String text = bot.getName() + "\n" + userHand.toString() + "\n" + botHand.toString() + "\n" + result.toString() + "\n" + history();
     showResultOnUiThread(text);
     sleep(timeTilNewGame);
     newGame();
@@ -159,5 +163,19 @@ public class Janken extends Activity{
         view.setImageResource(drawableId); 
       }
     });
+  }
+
+  public String history(){
+    if(result == Result.WIN){
+      numberOfWin += 1;
+    }
+    if(result == Result.LOSE){
+      numberOfLose += 1;
+    }
+    if(result == Result.DRAW){
+      numberOfDraw += 1;
+    }
+    String history = numberOfWin + "win, " + numberOfLose + "lose, " + numberOfDraw + "draw";
+    return history;
   }
 }
