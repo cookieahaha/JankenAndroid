@@ -13,8 +13,12 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
+import com.google.ads.*;
 
 public class Janken extends Activity{
+
+  private static final String tag = "janken";
 
   private AbstractBot bot;
   private Hand userHand;
@@ -36,9 +40,14 @@ public class Janken extends Activity{
 
   private MySQLiteOpenHelper hlpr;
 
+  private boolean resumed;
+
   public void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
+
+    AdView adView = (AdView)this.findViewById(R.id.adView);
+    adView.loadAd(new AdRequest());
   }
 
   public void onStart(){
@@ -50,7 +59,7 @@ public class Janken extends Activity{
     SQLiteDatabase radb = hlpr.getReadableDatabase();
     Cursor cursor = radb.query("logtable", new String[] {"result"}, null, null, null, null, null, null);
     while(cursor.moveToNext()){
-      int n = cursor.getInt(1);
+      int n = cursor.getInt(0);
       if(n == Result.WIN.value()){
         numberOfWin += 1; 
       }
@@ -66,15 +75,25 @@ public class Janken extends Activity{
   protected void onStop() {
     super.onStop();
     hlpr.close();
+    Log.i(tag, "hlpr was closed");
   }
 
   public void onResume(){
     super.onResume();
+    resumed = true;
     newGame();
+  }
+
+  public void onPause(){
+    super.onPause();
+    resumed = false;
   }
 
   public void afterPon(){
 //    botHand = bot.hand2();
+    if(resumed == false){
+      return;
+    }
     result = judge.judge(userHand, botHand);
     ContentValues values = new ContentValues();
     values.put("result", result.value());

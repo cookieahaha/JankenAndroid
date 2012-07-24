@@ -4,11 +4,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <Button android:id="@+id/button_AD"
-        android:layout_weight="1"
-        android:layout_height="0dp"
-        android:layout_width="fill_parent"
-        android:text="@string/button_AD" />
+<com.google.ads.AdView xmlns:googleads="http://schemas.android.com/apk/lib/com.google.ads"
+                         android:id="@+id/adView"
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"
+                         googleads:adUnitId="a1500e03aa73b0f"
+                         googleads:adSize="BANNER"
+                         googleads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID"
+                         googleads:loadAdOnCreate="true"/>
 
     <ImageView android:id="@+id/view_BOT"
         android:layout_weight="4"
