@@ -7,6 +7,9 @@ import java.util.Comparator;
 public class Judge implements Comparator<Hand> {
 
   public int compare(Hand hand0, Hand hand1) {
+    if(hand0 == Hand.UNKNOWN){
+      return -1;
+    }
     int a = (hand0.value() - hand1.value() + 3) % 3;
     switch (a) {
     case 2 :

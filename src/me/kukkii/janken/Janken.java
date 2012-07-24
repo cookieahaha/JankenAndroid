@@ -116,6 +116,7 @@ public class Janken extends Activity{
   }
 
   public void newGame(){
+    userHand = Hand.UNKNOWN;
     bot =(AbstractBot) BotManager.getManager().next();
     Resources res = getResources();
     final int drawableId = bot.getImage();
