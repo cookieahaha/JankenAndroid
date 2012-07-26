@@ -29,10 +29,6 @@ public class Janken extends Activity{
   private Judge judge = new Judge();
   private SQLiteDatabase mydb;
 
-  private int numberOfWin = 0;
-  private int numberOfDraw = 0;
-  private int numberOfLose = 0;
-
   private static final int timeJan = 2500;
   private static final int timeKen = 1000;
   private static final int timePon = 1000;
@@ -54,24 +50,8 @@ public class Janken extends Activity{
 
   public void onStart(){
     super.onStart();
-
     hlpr = new MySQLiteOpenHelper(getApplicationContext());
-    mydb = hlpr.getWritableDatabase();
-
-    SQLiteDatabase radb = hlpr.getReadableDatabase();
-    Cursor cursor = radb.query("logtable", new String[] {"result"}, null, null, null, null, null, null);
-    while(cursor.moveToNext()){
-      int n = cursor.getInt(0);
-      if(n == Result.WIN.value()){
-        numberOfWin += 1; 
-      }
-      if(n == Result.LOSE.value()){
-        numberOfLose += 1; 
-      }
-      if(n == Result.DRAW.value()){
-        numberOfDraw += 1; 
-      }
-    }
+    hlpr.readSQL();
   }
 
   protected void onStop() {
@@ -97,11 +77,8 @@ public class Janken extends Activity{
       return;
     }
     result = judge.judge(userHand, botHand);
-    ContentValues values = new ContentValues();
-    values.put("result", result.value());
-    mydb.insert("logtable", null, values);
-    String text = bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history();
-    showResultOnUiThread(text);
+    hlpr.writeResultToSQL(result);
+    showResultOnUiThread(hlpr.getResultAsString(bot,userHand,botHand,result));
     sleep(timeTilNewGame);
     newGame();
   }
@@ -213,20 +190,6 @@ public class Janken extends Activity{
         view.setImageResource(drawableId); 
       }
     });
-  }
-
-  public String history(){
-    if(result == Result.WIN){
-      numberOfWin += 1;
-    }
-    if(result == Result.LOSE){
-      numberOfLose += 1;
-    }
-    if(result == Result.DRAW){
-      numberOfDraw += 1;
-    }
-    String history = numberOfWin + " win, " + numberOfLose + " lose, " + numberOfDraw + " draw";
-    return history;
   }
 
   public void menu(View view) {
