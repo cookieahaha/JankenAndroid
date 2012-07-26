@@ -26,11 +26,10 @@
             android:onClick="menu"
             android:text="@string/button_MENU"/>
 
-
         <ImageView android:id="@+id/view_BOT"
-            android:layout_weight="4"
-            android:layout_height="0dp"
-            android:layout_width="fill_parent"/>
+            android:layout_weight="8"
+            android:layout_height="fill_parent"
+            android:layout_width="0dp"/>
 
     </LinearLayout>
 
