@@ -67,7 +67,6 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     values.put("result", result.value());
     mydb = this.getWritableDatabase();
     mydb.insert("logtable", null, values);
-    history(result);
   }
 
   public String history(Result result){
