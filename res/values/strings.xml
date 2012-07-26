@@ -6,4 +6,5 @@
     <string name="button_ROCK">ROCK</string>
     <string name="button_SCISSOR">SCISSOR</string>
     <string name="button_PAPER">PAPER</string>
+    <string name="button_MENU">menu</string>
 </resources>

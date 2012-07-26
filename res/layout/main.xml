@@ -13,10 +13,26 @@
                          googleads:testDevices="TEST_EMULATOR, TEST_DEVICE_ID"
                          googleads:loadAdOnCreate="true"/>
 
-    <ImageView android:id="@+id/view_BOT"
-        android:layout_weight="4"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_width="fill_parent"/>
+        android:layout_weight="4">
+
+        <Button android:id="@+id/button_MENU"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:onClick="menu"
+            android:text="@string/button_MENU"/>
+
+
+        <ImageView android:id="@+id/view_BOT"
+            android:layout_weight="4"
+            android:layout_height="0dp"
+            android:layout_width="fill_parent"/>
+
+    </LinearLayout>
 
     <TextView android:id="@+id/text"
         android:layout_weight="1"

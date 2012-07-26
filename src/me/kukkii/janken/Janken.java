@@ -15,6 +15,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 import com.google.ads.*;
+import android.content.Intent;
+
 
 public class Janken extends Activity{
 
@@ -226,4 +228,13 @@ public class Janken extends Activity{
     String history = numberOfWin + " win, " + numberOfLose + " lose, " + numberOfDraw + " draw";
     return history;
   }
+
+  public void menu(View view) {
+    Intent intent = new Intent(this, MenuActivity.class);
+//    EditText editText = (EditText) findViewById(R.id.edit_message);
+//    String message = editText.getText().toString();
+//    intent.putExtra(EXTRA_MESSAGE, message);
+    startActivity(intent);
+  }
+
 }
