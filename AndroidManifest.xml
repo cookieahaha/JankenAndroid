@@ -12,12 +12,11 @@
             </intent-filter>
         </activity>
 
-
-        <activity android:name="Janken" />
+        <activity android:name="me.kukkii.janken.Janken" />
 
         <activity android:name="com.google.ads.AdActivity"
               android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
     </application>
- <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 </manifest>
