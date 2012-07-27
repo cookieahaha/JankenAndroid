@@ -22,6 +22,7 @@ public class Janken extends Activity{
 
   private static final String tag = "janken";
 
+/*
   private AbstractBot bot;
   private Hand userHand;
   private Hand botHand;
@@ -35,6 +36,7 @@ public class Janken extends Activity{
   private static final int timeAfterPon = 50;
   private static final int timeTilNewGame = 2500;
   private static final int timeTilPon = timeJan + timeKen + timePon;
+*/
 
   private MySQLiteOpenHelper hlpr;
 
@@ -71,6 +73,9 @@ public class Janken extends Activity{
     resumed = false;
   }
 
+
+
+/*
   public void afterPon(){
 //    botHand = bot.hand2();
     if(resumed == false){
@@ -82,6 +87,8 @@ public class Janken extends Activity{
     sleep(timeTilNewGame);
     newGame();
   }
+*/
+
 
   public void showResultOnUiThread(String text) {
     final String text0 = text;
@@ -94,6 +101,9 @@ public class Janken extends Activity{
     });
   }
 
+
+
+/*
   public void newGame(){
     userHand = Hand.UNKNOWN;
     bot =(AbstractBot) BotManager.getManager().next();
@@ -155,18 +165,12 @@ public class Janken extends Activity{
     showResultOnUiThread("Pon");
   }
 
-  public void hand(View view){
+  public int getHand(View view){
     userHand = null;
     int id = view.getId();
-    if(id==R.id.button_ROCK){
-      userHand = Hand.ROCK;
-    }
-    if(id==R.id.button_SCISSOR){
-      userHand = Hand.SCISSOR;
-    }
-    if(id==R.id.button_PAPER){
-      userHand = Hand.PAPER;
-    }
+    return id;
+  }
+
     Toast.makeText(getApplicationContext(), userHand.toString(), Toast.LENGTH_SHORT).show();
   }
 
@@ -191,6 +195,7 @@ public class Janken extends Activity{
       }
     });
   }
+*/
 
   public void menu(View view) {
     Intent intent = new Intent(this, MenuActivity.class);
