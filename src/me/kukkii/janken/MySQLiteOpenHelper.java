@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.content.Context;
 import android.content.ContentValues;
-import android.database.Cursor;;
+import android.database.Cursor;
 import me.kukkii.janken.bot.AbstractBot;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
