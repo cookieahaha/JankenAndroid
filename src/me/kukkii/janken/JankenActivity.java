@@ -1,3 +1,4 @@
+// $Id$
 package me.kukkii.janken;
 
 import me.kukkii.janken.bot.AbstractBot;
@@ -18,7 +19,7 @@ import android.widget.TextView;
 import com.google.ads.*;
 
 
-public class Janken extends Activity{
+public class JankenActivity extends Activity {
 
   private static final String tag = "janken";
 
@@ -30,7 +31,7 @@ public class Janken extends Activity{
     super.onCreate(savedInstanceState);
     setContentView(R.layout.main);
 
-    AdView adView = (AdView)this.findViewById(R.id.adView);
+    AdView adView = (AdView)this.findViewById(R.id.adView1);
     adView.loadAd(new AdRequest());
   }
 
@@ -59,7 +60,7 @@ public class Janken extends Activity{
     resumed = false;
   }
 
-  public boolean isResumed() {
+  public boolean isResumed0() {
     return resumed;
   }
 

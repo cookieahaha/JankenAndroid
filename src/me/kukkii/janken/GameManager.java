@@ -5,7 +5,7 @@ import me.kukkii.janken.bot.BotManager;
 
 public class GameManager{
 
-  private Janken activity;
+  private JankenActivity activity;
   private MySQLiteOpenHelper dataManager;
 
   private Judge judge;
@@ -21,9 +21,10 @@ public class GameManager{
   private static final int timeTilNewGame = 2500;
   private static final int timeTilPon = timeJan + timeKen + timePon;
 
-  public GameManager(Janken activity, MySQLiteOpenHelper dataManager) {
+  public GameManager(JankenActivity activity, MySQLiteOpenHelper dataManager) {
     this.activity = activity;
     this.dataManager = dataManager;
+    judge = new Judge();
     startGame();
   }
 
@@ -67,7 +68,7 @@ public class GameManager{
   }
 
   public void afterPon(){
-    if(! activity.isResumed()){
+    if(! activity.isResumed0()){
       return;
     }
     result = judge.judge(userHand, botHand);
@@ -84,11 +85,11 @@ public class GameManager{
     pon();
     sleep(timeAfterPon);
     afterPon();
-    if(! activity.isResumed()){
+    if(! activity.isResumed0()){
       return;
     }
     sleep(timeTilNewGame);
-    if(! activity.isResumed()){
+    if(! activity.isResumed0()){
       return;
     }
     startGame();
