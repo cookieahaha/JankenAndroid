@@ -34,5 +34,9 @@ abstract public class AbstractBot extends AbstractPlayer {
   }
 
   abstract public int getImage();
+  
+  public int getTiming(){
+	  return 0;
+  }
 
 }

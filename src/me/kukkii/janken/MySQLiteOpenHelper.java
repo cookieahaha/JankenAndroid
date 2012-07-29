@@ -9,20 +9,17 @@ import android.database.Cursor;
 import me.kukkii.janken.bot.AbstractBot;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
-    static final String DB_NAME = "sqlite_sample.db";   // DB名
-    static final int DB_VERSION = 1;                // DBのVersion
+    static final String DB_NAME = "sqlite_sample.db";  
+    static final int DB_VERSION = 1;         
 
     private int numberOfWin = 0;
     private int numberOfDraw = 0;
     private int numberOfLose = 0;
     private SQLiteDatabase mydb;
 
-    // SQL文をStringに保持しておく
     static String CREATE_TABLE = "create table logtable(result INT);";
     static final String DROP_TABLE = "drop table logtable;";
  
-    // コンストラクタ
-    // CREATE用のSQLを取得する
     public MySQLiteOpenHelper(Context mContext){
         super(mContext,DB_NAME,null,DB_VERSION);
     }
@@ -32,15 +29,12 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
     }
  
-    // DBが存在しない状態でOpenすると、onCreateがコールされる
-    // 新規作成されたDBのインスタンスが付与されるので、テーブルを作成する。
-    @Override
+    // DB縺悟ｭ伜惠縺励↑縺�憾諷九〒Open縺吶ｋ縺ｨ縲｛nCreate縺後さ繝ｼ繝ｫ縺輔ｌ繧�    // 譁ｰ隕丈ｽ懈�縺輔ｌ縺櫂B縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺御ｻ倅ｸ弱＆繧後ｋ縺ｮ縺ｧ縲√ユ繝ｼ繝悶Ν繧剃ｽ懈�縺吶ｋ縲�    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE);
     }
  
-    // コンストラクタで指定したバージョンと、参照先のDBのバージョンに差異があるときにコールされる
-    // 今回バージョンは１固定のため、処理は行わない。
+    // 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縺ｧ謖�ｮ壹＠縺溘ヰ繝ｼ繧ｸ繝ｧ繝ｳ縺ｨ縲∝盾辣ｧ蜈医�DB縺ｮ繝舌�繧ｸ繝ｧ繝ｳ縺ｫ蟾ｮ逡ｰ縺後≠繧九→縺阪↓繧ｳ繝ｼ繝ｫ縺輔ｌ繧�    // 莉雁屓繝舌�繧ｸ繝ｧ繝ｳ縺ｯ�大崋螳壹�縺溘ａ縲∝�逅��陦後ｏ縺ｪ縺��
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
