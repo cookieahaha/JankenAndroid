@@ -1,6 +1,8 @@
 // $Id$
 package me.kukkii.janken;
 
+import java.io.IOException;
+
 import me.kukkii.janken.bot.AbstractBot;
 import me.kukkii.janken.bot.BotManager;
 
@@ -15,6 +17,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.TextView;
+
+import android.media.MediaPlayer;
 
 import com.google.ads.*;
 
@@ -33,6 +37,23 @@ public class JankenActivity extends Activity {
 
     AdView adView = (AdView)this.findViewById(R.id.adView1);
     adView.loadAd(new AdRequest());
+    
+    MediaPlayer player = new MediaPlayer();
+    try {
+      player.setDataSource("R.raw.bgm1.mp3");
+      player.setLooping(true);
+      player.prepare();
+      player.start();
+    } 
+    catch (IllegalArgumentException e) {
+      e.printStackTrace();
+    } 
+    catch (IllegalStateException e) {
+      e.printStackTrace();
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public void onStart(){
