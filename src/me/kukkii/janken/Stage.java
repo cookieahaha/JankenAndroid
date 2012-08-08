@@ -2,9 +2,11 @@
 
 package me.kukkii.janken;
 
+import java.io.Serializable;
+
 import me.kukkii.janken.bot.AbstractBot;
 
-public class Stage {
+public class Stage implements Serializable {
 
   private int id;
   private String name;
