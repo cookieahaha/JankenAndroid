@@ -50,7 +50,7 @@ public class JankenActivity extends Activity {
     
     soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
     soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
-      @Override
+      // @Override
       public void onLoadComplete(SoundPool soundPool, int sampleId,
           int status) {
         loaded = true;
