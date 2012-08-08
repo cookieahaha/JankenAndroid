@@ -18,6 +18,8 @@
         </activity>
 
         <activity android:name="JankenActivity" />
+        <activity android:name="BotListActivity" />
+        <activity android:name="SoundActivity" />
 
         <activity android:name="com.google.ads.AdActivity"
               android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>

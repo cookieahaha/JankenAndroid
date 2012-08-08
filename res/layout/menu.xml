@@ -24,7 +24,7 @@
         android:onClick="startMain" />
     
         <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_back"
+        android:id="@+id/button_botlist"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal" 
@@ -33,40 +33,12 @@
         android:onClick="startBotList" />
         
         <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_back"
+        android:id="@+id/button_sound"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal" 
-        android:text="Difficulty" 
+        android:text="Sound" 
         android:textColor="#ffffffff"
         android:onClick="startSound" />
-        
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_back"
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" 
-        android:gravity="center_horizontal" 
-        android:text="History" 
-        android:textColor="#ffffffff"
-        android:onClick="startMain" />
-            
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_back"
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" 
-        android:gravity="center_horizontal" 
-        android:text="LeaderBoard" 
-        android:textColor="#ffffffff"
-        android:onClick="startMain" />
-        
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_back"
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" 
-        android:gravity="center_horizontal" 
-        android:text="Achievement" 
-        android:textColor="#ffffffff"
-        android:onClick="startMain" />
-        
         
 </LinearLayout>
