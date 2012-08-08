@@ -12,18 +12,21 @@ import com.google.ads.AdView;
 
 public class BotListActivity extends Activity {
 
-	  public void onCreate(Bundle savedInstanceState) {
-		    super.onCreate(savedInstanceState);
-		    setContentView(R.layout.botlist);
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.botlist);
 
-		   /*
-		    AdView adView = (AdView)this.findViewById(R.id.adView0);
-		    adView.loadAd(new AdRequest());
-		   */
-		  }
-	
-	  public void menu(View view) {
-		    Intent intent = new Intent(this, MenuActivity.class);
-		    startActivity(intent);
-	  }
+    AdView adView = (AdView)this.findViewById(R.id.adViewBotList);
+    adView.loadAd(new AdRequest());
+  }
+  
+  public void menu(View view) {
+    Intent intent = new Intent(this, MenuActivity.class);
+    startActivity(intent);
+  }
+
+  public void gotoStage(View view) {
+    Intent intent = new Intent(this, JankenActivity.class);
+    startActivity(intent);
+  }
 }
