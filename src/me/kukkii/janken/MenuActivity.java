@@ -26,5 +26,15 @@ public class MenuActivity extends Activity {
     Intent intent = new Intent(this, JankenActivity.class);
     startActivity(intent);
   }
+  
+  public void startSound(View view) {
+	    Intent intent = new Intent(this, SoundActivity.class);
+	    startActivity(intent);
+	  }
+  
+  public void startBotList(View view) {
+	    Intent intent = new Intent(this, BotListActivity.class);
+	    startActivity(intent);
+	  }
 
 }
