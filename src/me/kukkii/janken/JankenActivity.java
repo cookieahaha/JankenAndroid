@@ -46,6 +46,10 @@ public class JankenActivity extends Activity {
     AdView adView = (AdView)this.findViewById(R.id.adView1);
     adView.loadAd(new AdRequest());
 
+    MySQLiteOpenHelper.setContext(getApplicationContext());
+    dataManager = MySQLiteOpenHelper.getHelper();
+    dataManager.readSQL();
+
     setVolumeControlStream(AudioManager.STREAM_MUSIC);
     
     soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -66,16 +70,13 @@ public class JankenActivity extends Activity {
 
   public void onStart(){
     super.onStart();
-
-    dataManager = new MySQLiteOpenHelper(getApplicationContext());
-    dataManager.readSQL();
   }
 
   protected void onStop() {
     super.onStop();
-    dataManager.close();
+    // dataManager.close();
+    // Log.i(tag, "dataManager was closed");
     mp.stop();
-    Log.i(tag, "dataManager was closed");
   }
 
   public void onResume(){

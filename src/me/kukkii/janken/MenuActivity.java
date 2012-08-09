@@ -20,6 +20,8 @@ public class MenuActivity extends Activity {
     AdView adView = (AdView)this.findViewById(R.id.adView0);
     adView.loadAd(new AdRequest());
    */
+
+    MySQLiteOpenHelper.setContext(getApplicationContext());
   }
 
   public void startMain(View view) {

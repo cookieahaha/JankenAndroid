@@ -33,7 +33,6 @@ public class BotListActivity extends Activity implements View.OnClickListener {
     StageManager stageManager = StageManager.getManager();
     buttons = new Button[20];
     LinearLayout virticalLinearLayout = (LinearLayout) findViewById(R.id.view_stages);
-    // Log.i("janken", "virticalLinearLayout=" + virticalLinearLayout);
     int id = 0;
     for (int i = 0; i < 5; i ++) {
       LinearLayout horizontalLinearLayout = new LinearLayout(this);
@@ -42,6 +41,7 @@ public class BotListActivity extends Activity implements View.OnClickListener {
       for (int j = 0; j < 4; j ++) {
         id += 1;
         Stage stage = stageManager.getStage(id);
+        // Log.d("janken", "id=" + id + "; stage=" + stage.toString());
         Button button = new Button(this);
         button.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT, 1.0f));
         StageStatus status = stage.getStatus();
@@ -89,11 +89,13 @@ public class BotListActivity extends Activity implements View.OnClickListener {
     int stageId = -1;
     for (int i = 0; i < buttons.length; i++) {
       if (buttons[i] == view) {
-        stageId = i;
+        stageId = i+1;
         break;
       }
     }
-    intent.putExtra("stage", StageManager.getManager().getStage(stageId));
+    Stage stage = StageManager.getManager().getStage(stageId);
+    // Log.d("janken", stage.toString());
+    intent.putExtra("stage", stage);
     startActivity(intent);
   }
 

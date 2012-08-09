@@ -30,18 +30,24 @@ public class StageManager {
 
   private void init() {
     for (int i = 0; i < stages.length; i++) {
-      String name = String.format("Stage %d", (i+1));
-      Stage stage = new Stage(i, name);
+      int id = i+1;
+      String name = String.format("Stage %d", id);
+      Stage stage = new Stage(id, name);
       stages[i] = stage;
       // TODO: needs to update BotManager.
       stage.setBot( (AbstractBot) BotManager.getManager().next() );
-      stage.setPoint(i+1);
+      stage.setPoint(id);
     }
   }
 
   private void initStatus() {
-    // for test data
-    // TODO: gets from SQLite.
+    MySQLiteOpenHelper dataManager = MySQLiteOpenHelper.getHelper();
+    StageStatus[] status = dataManager.getStageStatus();
+    for (int i = 0; i < status.length; i++) {
+      stages[i].setStatus(status[i]);
+    }
+
+    // for testing
     for (int i = 0; i < stages.length; i++) {
       if (i < 5) {
         if (i % 3 == 0) {
@@ -58,6 +64,7 @@ public class StageManager {
         stages[i].setStatus(StageStatus.LOCKED);
       }
     }
+    //
   }
 
   // ID starts with 1.

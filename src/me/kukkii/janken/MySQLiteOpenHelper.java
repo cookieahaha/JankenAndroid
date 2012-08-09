@@ -1,3 +1,4 @@
+// $Id$
 package me.kukkii.janken;
 
 import android.database.sqlite.SQLiteDatabase;
@@ -9,35 +10,60 @@ import android.database.Cursor;
 import me.kukkii.janken.bot.AbstractBot;
 
 public class MySQLiteOpenHelper extends SQLiteOpenHelper {
-    static final String DB_NAME = "sqlite_sample.db";  
-    static final int DB_VERSION = 1;         
 
-    private int numberOfWin = 0;
-    private int numberOfDraw = 0;
-    private int numberOfLose = 0;
-    private SQLiteDatabase mydb;
+  // singleton
+  private static Context _context = null;
+  private static MySQLiteOpenHelper helper = null;
 
-    static String CREATE_TABLE = "create table logtable(result INT);";
-    static final String DROP_TABLE = "drop table logtable;";
+  public static void setContext(Context context) {
+    _context = context;
+    helper = new MySQLiteOpenHelper(context);
+  }
+
+  public static MySQLiteOpenHelper getHelper() {
+    return helper;
+  }
+
+  private static final String DB_NAME = "sqlite_sample.db";  
+  private static final int DB_VERSION = 1;         
+
+  private static final String CREATE_LOGTABLE = "create table logtable(result INT);";
+  // private static final String DROP_LOGTABLE = "drop table logtable;";
+  private static final String CREATE_STAGESTATUS_TABLE = "create table stagestatustable(id INT, status INT);";
+  // private static final String DROP_STAGESTATUS_TABLE = "drop table stagestatustable;";
+
+  private static final int NUM_STAGES = 20;
+
+  private int numberOfWin = 0;
+  private int numberOfDraw = 0;
+  private int numberOfLose = 0;
+  private SQLiteDatabase mydb;
+
+  public MySQLiteOpenHelper(Context mContext){
+    super(mContext,DB_NAME,null,DB_VERSION);
+  }
+
+  public MySQLiteOpenHelper(Context context, String name,
+    CursorFactory factory, int version) {
+    super(context, name, factory, version);
+  }
  
-    public MySQLiteOpenHelper(Context mContext){
-        super(mContext,DB_NAME,null,DB_VERSION);
+  public void onCreate(SQLiteDatabase db) {
+    db.execSQL(CREATE_LOGTABLE);
+    db.execSQL(CREATE_STAGESTATUS_TABLE);
+    // initStatus();
+  }
+
+  public void initStatus() {
+    insertStatus(1, StageStatus.CURRENT);
+    for (int id = 2; id <= NUM_STAGES; id++) {
+      insertStatus(id, StageStatus.LOCKED);
     }
+  }
  
-    public MySQLiteOpenHelper(Context context, String name,
-        CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
- 
-    // DB縺悟ｭ伜惠縺励↑縺�憾諷九〒Open縺吶ｋ縺ｨ縲｛nCreate縺後さ繝ｼ繝ｫ縺輔ｌ繧�    // 譁ｰ隕丈ｽ懈�縺輔ｌ縺櫂B縺ｮ繧､繝ｳ繧ｹ繧ｿ繝ｳ繧ｹ縺御ｻ倅ｸ弱＆繧後ｋ縺ｮ縺ｧ縲√ユ繝ｼ繝悶Ν繧剃ｽ懈�縺吶ｋ縲�    @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TABLE);
-    }
- 
-    // 繧ｳ繝ｳ繧ｹ繝医Λ繧ｯ繧ｿ縺ｧ謖�ｮ壹＠縺溘ヰ繝ｼ繧ｸ繝ｧ繝ｳ縺ｨ縲∝盾辣ｧ蜈医�DB縺ｮ繝舌�繧ｸ繝ｧ繝ｳ縺ｫ蟾ｮ逡ｰ縺後≠繧九→縺阪↓繧ｳ繝ｼ繝ｫ縺輔ｌ繧�    // 莉雁屓繝舌�繧ｸ繝ｧ繝ｳ縺ｯ�大崋螳壹�縺溘ａ縲∝�逅��陦後ｏ縺ｪ縺��
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-    }
+  @Override
+  public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+  }
 
   public void readSQL(){
     SQLiteDatabase radb = this.getReadableDatabase();
@@ -80,6 +106,72 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
   public String getResultAsString(AbstractBot bot, Hand userHand, Hand botHand, Result result){
     String text = bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history(result);
     return text;
+  }
+
+  public StageStatus[] getStageStatus() {
+    if (getStageStatus(1) == null) {
+      initStatus();
+    }
+    StageStatus[] status = new StageStatus[NUM_STAGES];
+    SQLiteDatabase radb = this.getReadableDatabase();
+    Cursor cursor = radb.query("stagestatustable", new String[] {"id", "status"}, null, null, null, null, null, null);
+    if (cursor == null) {
+      return status;
+    }
+    while(cursor.moveToNext()){
+      int id = cursor.getInt(0);
+      int st = cursor.getInt(1);
+      status[id - 1] = StageStatus.get(st);
+    }
+    return status;
+  }
+
+  public StageStatus getStageStatus(int id) {
+    SQLiteDatabase radb = this.getReadableDatabase();
+    int st = 0;
+    try {
+      Cursor cursor = radb.query("stagestatustable", new String[] {"id", "status"}, "id=?", new String[] { String.valueOf(id) }, null, null, null, null);
+
+      if (cursor == null) {
+        return null;
+      }
+      cursor.moveToFirst();
+      // int id = cursor.getInt(0);
+      st = cursor.getInt(1);
+    }
+    catch (Exception e) {
+      return null;
+    }
+    StageStatus stat  = StageStatus.get(st);
+    return stat;
+  }
+
+  public void updateStatus(int id, StageStatus stat) {
+    ContentValues values = new ContentValues();
+    // values.put("id", id);
+    values.put("status", stat.value());
+    mydb = this.getWritableDatabase();
+    mydb.update("stagestatustable", values, "id=?", new String[] { String.valueOf(id) });
+  }
+
+  public void insertStatus(int id, StageStatus stat) {
+    ContentValues values = new ContentValues();
+    values.put("id", id);
+    values.put("status", stat.value());
+    mydb = this.getWritableDatabase();
+    mydb.insert("stagestatustable", null, values);
+  }
+
+  public void setStatus(int id, StageStatus stat) {
+    updateStatus(id, stat);
+   /*
+    if (getStatus(id) == null) {
+      insertStatus(id, stat);
+    }
+    else {
+      updateStatus(id, stat);
+    }
+   */
   }
 
 }

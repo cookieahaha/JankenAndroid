@@ -51,4 +51,7 @@ public class Stage implements Serializable {
     this.status = status;
   }
 
+  public String toString() {
+    return "Stage[id=" + id + "; name=" + name + "; bot=" + bot.toString() + "; point=" + point + "; status=" + status.toString() + "]";
+  }
 }
