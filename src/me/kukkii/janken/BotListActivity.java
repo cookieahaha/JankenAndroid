@@ -3,21 +3,53 @@ package me.kukkii.janken;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Gravity;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
-public class BotListActivity extends Activity {
+public class BotListActivity extends Activity implements View.OnClickListener {
+
+  private Button[] buttons;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.botlist);
 
+    init();
+
     AdView adView = (AdView)this.findViewById(R.id.adViewBotList);
     adView.loadAd(new AdRequest());
+  }
+
+  private void init() {
+    buttons = new Button[20];
+    LinearLayout virticalLinearLayout = (LinearLayout) findViewById(R.id.view_stages);
+    // Log.i("janken", "virticalLinearLayout=" + virticalLinearLayout);
+    int id = 0;
+    for (int i = 0; i < 5; i ++) {
+      LinearLayout horizontalLinearLayout = new LinearLayout(this);
+      horizontalLinearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 0, 1.0f));
+      virticalLinearLayout.addView( horizontalLinearLayout );
+      for (int j = 0; j < 4; j ++) {
+        Button button = new Button(this);
+        button.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT, 1.0f));
+        button.setText("Stage " + (id+1));
+        button.setGravity(Gravity.CENTER);
+        button.setTextColor( Color.parseColor("#ffffff") );
+        button.setOnClickListener( this );
+        horizontalLinearLayout.addView(button);
+        buttons[id] = button;
+        id += 1;
+      }
+    }
   }
   
   public void menu(View view) {
@@ -25,14 +57,29 @@ public class BotListActivity extends Activity {
     startActivity(intent);
   }
 
+  // implements View.onClickListener
+  public void onClick(View view) {
+    gotoStage(view);
+  }
+
   public void gotoStage(View view) {
     Intent intent = new Intent(this, JankenActivity.class);
+   /*
     int viewId = view.getId();
     int stageId = getStageId(viewId);
+   */
+    int stageId = -1;
+    for (int i = 0; i < buttons.length; i++) {
+      if (buttons[i] == view) {
+        stageId = i;
+        break;
+      }
+    }
     intent.putExtra("stage", StageManager.getManager().getStage(stageId));
     startActivity(intent);
   }
 
+  /*
   private int getStageId(int viewId) {
     if (viewId == R.id.button_stage_0) {
       return 0;
@@ -79,4 +126,5 @@ public class BotListActivity extends Activity {
       return 0;
     }
   }
+  */
 }
