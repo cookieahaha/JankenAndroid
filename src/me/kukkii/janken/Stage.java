@@ -12,6 +12,7 @@ public class Stage implements Serializable {
   private String name;
   private AbstractBot bot;
   private int point;
+  private StageStatus status;
 
   public Stage(int id, String name) {
     this.id = id;
@@ -40,6 +41,14 @@ public class Stage implements Serializable {
 
   public void setPoint(int point) {
     this.point = point;
+  }
+
+  public StageStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(StageStatus status) {
+    this.status = status;
   }
 
 }

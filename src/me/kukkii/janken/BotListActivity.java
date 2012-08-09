@@ -30,6 +30,7 @@ public class BotListActivity extends Activity implements View.OnClickListener {
   }
 
   private void init() {
+    StageManager stageManager = StageManager.getManager();
     buttons = new Button[20];
     LinearLayout virticalLinearLayout = (LinearLayout) findViewById(R.id.view_stages);
     // Log.i("janken", "virticalLinearLayout=" + virticalLinearLayout);
@@ -39,9 +40,11 @@ public class BotListActivity extends Activity implements View.OnClickListener {
       horizontalLinearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 0, 1.0f));
       virticalLinearLayout.addView( horizontalLinearLayout );
       for (int j = 0; j < 4; j ++) {
+        Stage stage = stageManager.getStage(id);
         Button button = new Button(this);
         button.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT, 1.0f));
-        button.setText("Stage " + (id+1));
+        // button.setText("Stage " + (id+1));
+        button.setText( stage.getName() + " " + stage.getStatus().toString() );
         button.setGravity(Gravity.CENTER);
         button.setTextColor( Color.parseColor("#ffffff") );
         button.setOnClickListener( this );

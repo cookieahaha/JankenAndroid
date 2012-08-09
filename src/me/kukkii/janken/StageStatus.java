@@ -2,7 +2,9 @@
 
 package me.kukkii.janken;
 
-public enum StageStatus {
+import java.io.Serializable;
+
+public enum StageStatus implements Serializable {
 
   LOCKED (0),
   CURRENT (1),
@@ -33,4 +35,20 @@ public enum StageStatus {
       return LOCKED;
     }
   }
+
+  public String toString() {
+    switch (value) {
+    case 0 :
+      return "Locked";
+    case 1 :
+      return "Current";
+    case 2 :
+      return "Cleared";
+    case 3 :
+      return "Perfect";
+    default :
+      return "Locked";
+    }
+  }
+
 }

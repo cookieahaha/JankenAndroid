@@ -25,6 +25,7 @@ public class StageManager {
   public StageManager(int nStages) {
     stages = new Stage[nStages];
     init();
+    initStatus();
   }
 
   private void init() {
@@ -35,6 +36,27 @@ public class StageManager {
       // TODO: needs to update BotManager.
       stage.setBot( (AbstractBot) BotManager.getManager().next() );
       stage.setPoint(i+1);
+    }
+  }
+
+  private void initStatus() {
+    // for test data
+    // TODO: gets from SQLite.
+    for (int i = 0; i < stages.length; i++) {
+      if (i < 5) {
+        if (i % 3 == 0) {
+          stages[i].setStatus(StageStatus.PERFECT);
+        }
+        else {
+          stages[i].setStatus(StageStatus.CLEARED);
+        }
+      }
+      else if (i == 5) {
+        stages[i].setStatus(StageStatus.CURRENT);
+      }
+      else {
+        stages[i].setStatus(StageStatus.LOCKED);
+      }
     }
   }
 
