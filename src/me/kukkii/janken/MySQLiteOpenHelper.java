@@ -51,13 +51,32 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
   public void onCreate(SQLiteDatabase db) {
     db.execSQL(CREATE_LOGTABLE);
     db.execSQL(CREATE_STAGESTATUS_TABLE);
-    // initStatus();
   }
 
   public void initStatus() {
     insertStatus(1, StageStatus.CURRENT);
     for (int id = 2; id <= NUM_STAGES; id++) {
       insertStatus(id, StageStatus.LOCKED);
+    }
+  }
+
+  // for testing
+  public void initStatusForTest() {
+    for (int id = 1; id <= NUM_STAGES; id++) {
+      if (id < 7) {
+        if (id % 3 == 1) {
+          insertStatus(id, StageStatus.PERFECT);
+        }
+        else {
+          insertStatus(id, StageStatus.CLEARED);
+        }
+      }
+      else if (id == 7) {
+        insertStatus(id, StageStatus.CURRENT);
+      }
+      else {
+        insertStatus(id, StageStatus.LOCKED);
+      }
     }
   }
  
@@ -110,7 +129,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
   public StageStatus[] getStageStatus() {
     if (getStageStatus(1) == null) {
-      initStatus();
+      // initStatus();
+      initStatusForTest();
     }
     StageStatus[] status = new StageStatus[NUM_STAGES];
     SQLiteDatabase radb = this.getReadableDatabase();

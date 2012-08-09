@@ -48,6 +48,7 @@ public class StageManager {
     }
 
     // for testing
+   /*
     for (int i = 0; i < stages.length; i++) {
       if (i < 5) {
         if (i % 3 == 0) {
@@ -64,6 +65,7 @@ public class StageManager {
         stages[i].setStatus(StageStatus.LOCKED);
       }
     }
+   */
     //
   }
 
