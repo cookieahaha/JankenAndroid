@@ -30,7 +30,7 @@ public class StageManager {
 
   private void init() {
     for (int i = 0; i < stages.length; i++) {
-      String name = String.format("Stage %d", i);
+      String name = String.format("Stage %d", (i+1));
       Stage stage = new Stage(i, name);
       stages[i] = stage;
       // TODO: needs to update BotManager.
@@ -60,8 +60,9 @@ public class StageManager {
     }
   }
 
+  // ID starts with 1.
   public Stage getStage(int id) {
-    return stages[id];
+    return stages[id - 1];
   }
 
   public int getNumberOfStages() {

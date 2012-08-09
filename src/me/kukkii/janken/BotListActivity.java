@@ -40,17 +40,32 @@ public class BotListActivity extends Activity implements View.OnClickListener {
       horizontalLinearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 0, 1.0f));
       virticalLinearLayout.addView( horizontalLinearLayout );
       for (int j = 0; j < 4; j ++) {
+        id += 1;
         Stage stage = stageManager.getStage(id);
         Button button = new Button(this);
         button.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT, 1.0f));
-        // button.setText("Stage " + (id+1));
-        button.setText( stage.getName() + " " + stage.getStatus().toString() );
+        StageStatus status = stage.getStatus();
+        button.setText( stage.getName() + " " + status.toString() );
         button.setGravity(Gravity.CENTER);
-        button.setTextColor( Color.parseColor("#ffffff") );
+        switch (status) {
+        case PERFECT :
+          button.setTextColor( Color.parseColor("#00ff00") );
+          break;
+        case CLEARED :
+          button.setTextColor( Color.parseColor("#0000ff") );
+          break;
+        case CURRENT :
+          button.setTextColor( Color.parseColor("#ffff00") );
+          break;
+        case LOCKED :
+        default :
+          button.setTextColor( Color.parseColor("#ff0000") );
+          break;
+        }
         button.setOnClickListener( this );
+        button.setClickable( (status != StageStatus.LOCKED) );
         horizontalLinearLayout.addView(button);
-        buttons[id] = button;
-        id += 1;
+        buttons[4*i+j] = button;
       }
     }
   }
