@@ -3,8 +3,9 @@
 package me.kukkii.janken;
 
 //import java.awt.Image;
+import java.io.Serializable;
 
-public interface Player{
+public interface Player extends Serializable {
 
   public long getId();
 
