@@ -21,6 +21,10 @@ public class GameManager{
   private static final int timeTilNewGame = 2500;
   private static final int timeTilPon = timeJan + timeKen + timePon;
 
+  private Thread gameThread;
+  
+  private boolean gameIsRunning;
+  
   public GameManager(JankenActivity activity, MySQLiteOpenHelper dataManager) {
     this.activity = activity;
     this.dataManager = dataManager;
@@ -33,11 +37,13 @@ public class GameManager{
     bot =(AbstractBot) BotManager.getManager().next();
     activity.showBot(bot);
 
-    new Thread(new Runnable() {
+    gameThread = new Thread(new Runnable() {
       public void run() {
+        gameIsRunning = true;
         game();
       }
-    }).start();
+    });
+    gameThread.start();
 
     new Thread(new Runnable() {
       public void run() {
@@ -78,17 +84,32 @@ public class GameManager{
 
   public void game() {
     sleep(timeJan);
+    if(!gameIsRunning){
+      return;
+    }
     jan();
     sleep(timeKen);
+    if(!gameIsRunning){
+      return;
+    }
     ken();
     sleep(timePon);
+    if(!gameIsRunning){
+      return;
+    }
     pon();
     sleep(timeAfterPon);
+    if(!gameIsRunning){
+      return;
+    }
     afterPon();
     if(! activity.isResumed0()){
       return;
     }
     sleep(timeTilNewGame);
+    if(!gameIsRunning){
+      return;
+    }
     if(! activity.isResumed0()){
       return;
     }
@@ -104,4 +125,8 @@ public class GameManager{
     activity.showBotHand(hand);
   }
  
+  public void killGameThread(){
+ //   gameThread.stop();
+    gameIsRunning = false;
+  }
 }

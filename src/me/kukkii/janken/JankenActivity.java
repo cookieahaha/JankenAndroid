@@ -33,11 +33,7 @@ public class JankenActivity extends Activity {
   private MySQLiteOpenHelper dataManager;
   private GameManager gameManager;
   private boolean resumed;
-
-  private SoundPool soundPool;
-  private int soundID;
   
-  boolean loaded = false;
   
   public void onCreate(Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
@@ -51,16 +47,7 @@ public class JankenActivity extends Activity {
     dataManager.readSQL();
 
     setVolumeControlStream(AudioManager.STREAM_MUSIC);
-    
-    soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
-    soundPool.setOnLoadCompleteListener(new OnLoadCompleteListener() {
-      // @Override
-      public void onLoadComplete(SoundPool soundPool, int sampleId,
-          int status) {
-        loaded = true;
-      }
-    });
-    soundID = soundPool.load(this, R.raw.janken, 1);
+
   }
 
   public void onStart(){
@@ -76,11 +63,7 @@ public class JankenActivity extends Activity {
 
   public void onResume(){
     super.onResume();
-    resumed = true;
-    
-    SoundPool soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);  
-    int soundID = soundPool.load(this, R.raw.bgm1, 1); 
-    soundPool.play(soundID, 1.0F, 1.0F, 1, -1, 1.0F); 
+    resumed = true; 
 
     gameManager = new GameManager(this, dataManager);
     
@@ -93,7 +76,7 @@ public class JankenActivity extends Activity {
   public void onPause(){
     super.onPause();
     resumed = false;
-    soundPool.stop(soundID);
+    gameManager.killGameThread();
     
     if(SoundManager.getSoundManager().getChangeActivity() == false){
       SoundManager.getSoundManager().stopBgm();
@@ -130,50 +113,17 @@ public class JankenActivity extends Activity {
 
   public void showJan(){
     showMessage("Jan");
-    
-    AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-    float actualVolume = (float) audioManager
-        .getStreamVolume(AudioManager.STREAM_MUSIC);
-    float maxVolume = (float) audioManager
-        .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-    float volume = actualVolume / maxVolume;
-    // Is the sound loaded already?
-    if (loaded) {
-      soundPool.play(soundID, volume, volume, 1, 0, 1f);
-      Log.e("Test", "Played sound");
-    }
+    SoundManager.getSoundManager().jan();
   }
 
   public void showKen(){
     showMessage("Ken");
-
-    AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-    float actualVolume = (float) audioManager
-        .getStreamVolume(AudioManager.STREAM_MUSIC);
-    float maxVolume = (float) audioManager
-        .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-    float volume = actualVolume / maxVolume;
-    // Is the sound loaded already?
-    if (loaded) {
-      soundPool.play(soundID, volume, volume, 1, 0, 1f);
-      Log.e("Test", "Played sound");
-    }
+    SoundManager.getSoundManager().ken();
   }
     
   public void showPon(){
     showMessage("Pon");
-
-    AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-    float actualVolume = (float) audioManager
-        .getStreamVolume(AudioManager.STREAM_MUSIC);
-    float maxVolume = (float) audioManager
-        .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-    float volume = actualVolume / maxVolume;
-    // Is the sound loaded already?
-    if (loaded) {
-      soundPool.play(soundID, volume, volume, 1, 0, 1f);
-      Log.e("Test", "Played sound");
-    }
+    SoundManager.getSoundManager().pon();
   }
 
   public void onClickHand(View view){
