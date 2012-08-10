@@ -34,9 +34,9 @@ public class JankenActivity extends Activity {
   private GameManager gameManager;
   private boolean resumed;
 
-  private MediaPlayer mp;
   private SoundPool soundPool;
   private int soundID;
+  
   boolean loaded = false;
   
   public void onCreate(Bundle savedInstanceState){
@@ -61,11 +61,6 @@ public class JankenActivity extends Activity {
       }
     });
     soundID = soundPool.load(this, R.raw.janken, 1);
-    
-    mp = MediaPlayer.create(this, R.raw.bgm1);
-    mp.setLooping(true);
-    mp.start();
-    mp.setVolume(0.3F, 0.3F);
   }
 
   public void onStart(){
@@ -76,7 +71,7 @@ public class JankenActivity extends Activity {
     super.onStop();
     // dataManager.close();
     // Log.i(tag, "dataManager was closed");
-    mp.stop();
+
   }
 
   public void onResume(){
@@ -88,11 +83,21 @@ public class JankenActivity extends Activity {
     soundPool.play(soundID, 1.0F, 1.0F, 1, -1, 1.0F); 
 
     gameManager = new GameManager(this, dataManager);
+    
+    if(SoundManager.getSoundManager().getChangeActivity() == false){   
+      SoundManager.getSoundManager().startBgm();
+    }
+    SoundManager.getSoundManager().setChangeActivity(false);
   }
 
   public void onPause(){
     super.onPause();
     resumed = false;
+    soundPool.stop(soundID);
+    
+    if(SoundManager.getSoundManager().getChangeActivity() == false){
+      SoundManager.getSoundManager().stopBgm();
+    }
   }
 
   public boolean isResumed0() {
@@ -210,6 +215,7 @@ public class JankenActivity extends Activity {
   public void menu(View view) {
     Intent intent = new Intent(this, MenuActivity.class);
     startActivity(intent);
+    SoundManager.getSoundManager().setChangeActivity(true);
   }
 
 }

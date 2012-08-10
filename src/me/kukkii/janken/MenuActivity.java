@@ -22,21 +22,44 @@ public class MenuActivity extends Activity {
    */
 
     MySQLiteOpenHelper.setContext(getApplicationContext());
+
+    if(SoundManager.getSoundManager() == null){
+      SoundManager.setContext(getApplicationContext());
+      SoundManager.getSoundManager().setChangeActivity(false);
+    }
   }
 
+  public void onResume(){
+	super.onResume();
+    if(SoundManager.getSoundManager().getChangeActivity() == false){   
+      SoundManager.getSoundManager().startBgm();
+    }
+    SoundManager.getSoundManager().setChangeActivity(false);
+  }
+  
+  public void onPause(){
+    super.onPause();
+    if(SoundManager.getSoundManager().getChangeActivity() == false){
+      SoundManager.getSoundManager().stopBgm();
+    }
+  }  
+  
   public void startMain(View view) {
     Intent intent = new Intent(this, JankenActivity.class);
     startActivity(intent);
+    SoundManager.getSoundManager().setChangeActivity(true);
   }
   
   public void startSound(View view) {
-	    Intent intent = new Intent(this, SoundActivity.class);
-	    startActivity(intent);
-	  }
+    Intent intent = new Intent(this, SoundActivity.class);
+    startActivity(intent);
+	SoundManager.getSoundManager().setChangeActivity(true);
+  }
   
   public void startBotList(View view) {
-	    Intent intent = new Intent(this, BotListActivity.class);
-	    startActivity(intent);
-	  }
+	Intent intent = new Intent(this, BotListActivity.class);
+	startActivity(intent);
+	SoundManager.getSoundManager().setChangeActivity(true);
+  }
 
 }

@@ -27,8 +27,24 @@ public class BotListActivity extends Activity implements View.OnClickListener {
 
     AdView adView = (AdView)this.findViewById(R.id.adViewBotList);
     adView.loadAd(new AdRequest());
+    
   }
 
+  public void onResume(){
+	  super.onResume();
+	  if(SoundManager.getSoundManager().getChangeActivity() == false){   
+	    SoundManager.getSoundManager().startBgm();
+	  }
+	  SoundManager.getSoundManager().setChangeActivity(false);
+  }
+  
+  public void onPause(){
+    super.onPause();
+    if(SoundManager.getSoundManager().getChangeActivity() == false){
+      SoundManager.getSoundManager().stopBgm();
+    }
+  }  
+  
   private void init() {
     StageManager stageManager = StageManager.getManager();
     buttons = new Button[20];
@@ -73,6 +89,7 @@ public class BotListActivity extends Activity implements View.OnClickListener {
   public void menu(View view) {
     Intent intent = new Intent(this, MenuActivity.class);
     startActivity(intent);
+    SoundManager.getSoundManager().setChangeActivity(true);
   }
 
   // implements View.onClickListener
@@ -97,6 +114,7 @@ public class BotListActivity extends Activity implements View.OnClickListener {
     // Log.d("janken", stage.toString());
     intent.putExtra("stage", stage);
     startActivity(intent);
+    SoundManager.getSoundManager().setChangeActivity(true);
   }
 
   /*
