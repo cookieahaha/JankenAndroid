@@ -44,6 +44,9 @@ public class BotListActivity extends Activity implements View.OnClickListener {
   
   public void onPause(){
     super.onPause();
+    if(!SoundManager.getSoundManager().getBgmIsOn()){
+      return;
+    }
     if(SoundManager.getSoundManager().getChangeActivity() == false){
       SoundManager.getSoundManager().stopBgm();
     }

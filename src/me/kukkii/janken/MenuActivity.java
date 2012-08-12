@@ -43,6 +43,9 @@ public class MenuActivity extends Activity {
   
   public void onPause(){
     super.onPause();
+    if(!SoundManager.getSoundManager().getBgmIsOn()){
+      return;
+    }
     if(SoundManager.getSoundManager().getChangeActivity() == false){
       SoundManager.getSoundManager().stopBgm();
     }
@@ -66,11 +69,12 @@ public class MenuActivity extends Activity {
 	SoundManager.getSoundManager().setChangeActivity(true);
   }
 
-  public void setBgmisOn(){
+  public void setBgmIsOn(View view){
     SoundManager.getSoundManager().setBgmIsOn(true); 
+    SoundManager.getSoundManager().startBgm();
   }
   
-  public void setBgmisOff(){
+  public void setBgmIsOff(View view){
     SoundManager.getSoundManager().setBgmIsOn(false);
     SoundManager.getSoundManager().stopBgm();
   }

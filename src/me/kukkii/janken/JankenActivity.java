@@ -82,6 +82,9 @@ public class JankenActivity extends Activity {
     resumed = false;
     gameManager.killGameThread();
     
+    if(!SoundManager.getSoundManager().getBgmIsOn()){
+      return;
+    }
     if(SoundManager.getSoundManager().getChangeActivity() == false){
       SoundManager.getSoundManager().stopBgm();
     }
