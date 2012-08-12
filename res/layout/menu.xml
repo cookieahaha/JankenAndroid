@@ -40,5 +40,18 @@
         android:text="Sound" 
         android:textColor="#ffffffff"
         android:onClick="startSound" />
-        
+
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BgmOn"
+            android:onClick="setBgmIsOn" />
+
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BgmOff"
+            android:onClick="setBgmIsOff" />
 </LinearLayout>

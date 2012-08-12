@@ -67,6 +67,10 @@ public class JankenActivity extends Activity {
 
     gameManager = new GameManager(this, dataManager);
     
+    if(!SoundManager.getSoundManager().getBgmIsOn()){
+      SoundManager.getSoundManager().setChangeActivity(false);
+      return;
+    }
     if(SoundManager.getSoundManager().getChangeActivity() == false){   
       SoundManager.getSoundManager().startBgm();
     }

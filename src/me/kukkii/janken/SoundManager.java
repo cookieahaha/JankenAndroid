@@ -31,6 +31,8 @@ public class SoundManager {
   private int soundID;
   boolean loaded = false;
   
+  private boolean bgmIsOn;
+  
   public SoundManager(Context context) {
 	    bgm = MediaPlayer.create(context, R.raw.bgm1);
 	    
@@ -103,6 +105,14 @@ public class SoundManager {
       soundPool.play(soundID, volume, volume, 1, 0, 1f);
       Log.e("Test", "Played sound");
     }
+  }
+
+  public void setBgmIsOn(boolean bgmIsOn){
+    this.bgmIsOn = bgmIsOn;
+  }
+  
+  public boolean getBgmIsOn(){
+    return bgmIsOn;
   }
   
 }

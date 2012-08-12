@@ -32,6 +32,10 @@ public class BotListActivity extends Activity implements View.OnClickListener {
 
   public void onResume(){
 	  super.onResume();
+	  if(!SoundManager.getSoundManager().getBgmIsOn()){
+	      SoundManager.getSoundManager().setChangeActivity(false);
+	      return;
+	    }
 	  if(SoundManager.getSoundManager().getChangeActivity() == false){   
 	    SoundManager.getSoundManager().startBgm();
 	  }
