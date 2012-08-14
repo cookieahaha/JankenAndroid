@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Janken</string>
     <string name="button_AD">Ad</string>
     <string name="button_BOT">bot</string>
@@ -7,4 +8,8 @@
     <string name="button_SCISSOR">SCISSOR</string>
     <string name="button_PAPER">PAPER</string>
     <string name="button_MENU">menu</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
 </resources>
