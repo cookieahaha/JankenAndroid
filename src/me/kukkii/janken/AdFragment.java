@@ -1,7 +1,7 @@
 package me.kukkii.janken;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 
 import com.google.ads.AdRequest;
