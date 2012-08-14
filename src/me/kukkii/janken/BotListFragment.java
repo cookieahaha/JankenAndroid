@@ -22,10 +22,11 @@ import com.google.ads.AdView;
 public class BotListFragment extends Fragment implements View.OnClickListener {
 
   private Button[] buttons;
+  private Activity activity = getActivity();
+  
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     return inflater.inflate(R.layout.botlist_fragment, container, false);
-    init();    
   }
 
   public void onResume(){
@@ -39,17 +40,17 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
   private void init() {
     StageManager stageManager = StageManager.getManager();
     buttons = new Button[20];
-    LinearLayout virticalLinearLayout = (LinearLayout) findViewById(R.id.view_stages);
+    LinearLayout virticalLinearLayout = (LinearLayout) activity.findViewById(R.id.view_stages);
     int id = 0;
     for (int i = 0; i < 5; i ++) {
-      LinearLayout horizontalLinearLayout = new LinearLayout(this);
+      LinearLayout horizontalLinearLayout = new LinearLayout(activity);
       horizontalLinearLayout.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 0, 1.0f));
       virticalLinearLayout.addView( horizontalLinearLayout );
       for (int j = 0; j < 4; j ++) {
         id += 1;
         Stage stage = stageManager.getStage(id);
         // Log.d("janken", "id=" + id + "; stage=" + stage.toString());
-        Button button = new Button(this);
+        Button button = new Button(activity);
         button.setLayoutParams(new LayoutParams(0, LayoutParams.FILL_PARENT, 1.0f));
         StageStatus status = stage.getStatus();
         button.setText( stage.getName() + " " + status.toString() );
@@ -80,7 +81,7 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
   public void menu(View view) {
     MenuFragment fragment = new MenuFragment();
     Bundle args = new Bundle();
-    args.putSerializable("type", type);
+ //   args.putSerializable("type", type);
     fragment.setArguments(args);
 
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
@@ -97,11 +98,7 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
   }
 
   public void gotoStage(View view) {
-    Intent intent = new Intent(this, JankenFragment.class);
-   /*
-    int viewId = view.getId();
-    int stageId = getStageId(viewId);
-   */
+
     int stageId = -1;
     for (int i = 0; i < buttons.length; i++) {
       if (buttons[i] == view) {
@@ -111,8 +108,17 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
     }
     Stage stage = StageManager.getManager().getStage(stageId);
     // Log.d("janken", stage.toString());
-    intent.putExtra("stage", stage);
-    startActivity(intent);
+    JankenFragment fragment = new JankenFragment();
+    Bundle args = new Bundle();
+ //   args.putSerializable("type", type);
+    fragment.setArguments(args);
+
+    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.main_fragment, fragment);
+    transaction.addToBackStack(null);
+
+    // Commit the transaction
+    transaction.commit();
   }
 
   /*

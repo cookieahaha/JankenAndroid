@@ -58,7 +58,7 @@ public class JankenFragment extends Fragment {
     super.onStart();
   }
 
-  protected void onStop() {
+  public void onStop() {
     super.onStop();
     // dataManager.close();
     // Log.i(tag, "dataManager was closed");
