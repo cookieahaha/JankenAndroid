@@ -3,7 +3,7 @@ package me.kukkii.janken;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
