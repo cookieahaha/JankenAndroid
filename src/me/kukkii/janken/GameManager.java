@@ -5,7 +5,7 @@ import me.kukkii.janken.bot.BotManager;
 
 public class GameManager{
 
-  private JankenActivity activity;
+  private JankenFragment fragment;
   private MySQLiteOpenHelper dataManager;
 
   private Judge judge;
@@ -25,8 +25,8 @@ public class GameManager{
   
   private boolean gameIsRunning;
   
-  public GameManager(JankenActivity activity, MySQLiteOpenHelper dataManager) {
-    this.activity = activity;
+  public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager) {
+    this.fragment = activity;
     this.dataManager = dataManager;
     judge = new Judge();
     startGame();
@@ -35,7 +35,7 @@ public class GameManager{
   private void startGame(){
     userHand = Hand.UNKNOWN;
     bot =(AbstractBot) BotManager.getManager().next();
-    activity.showBot(bot);
+    fragment.showBot(bot);
 
     gameThread = new Thread(new Runnable() {
       public void run() {
@@ -62,24 +62,24 @@ public class GameManager{
   }
 
   public void jan(){
-    activity.showJan();
+    fragment.showJan();
   }
 
   public void ken(){
-    activity.showKen();
+    fragment.showKen();
   }
    
   public void pon(){
-    activity.showPon();
+    fragment.showPon();
   }
 
   public void afterPon(){
-    if(! activity.isResumed0()){
+    if(! fragment.isResumed0()){
       return;
     }
     result = judge.judge(userHand, botHand);
     dataManager.writeResultToSQL(result);
-    activity.showResult(dataManager.getResultAsString(bot,userHand,botHand,result));
+    fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result));
   }
 
   public void game() {
@@ -103,14 +103,14 @@ public class GameManager{
       return;
     }
     afterPon();
-    if(! activity.isResumed0()){
+    if(! fragment.isResumed0()){
       return;
     }
     sleep(timeTilNewGame);
     if(!gameIsRunning){
       return;
     }
-    if(! activity.isResumed0()){
+    if(! fragment.isResumed0()){
       return;
     }
     startGame();
@@ -122,7 +122,7 @@ public class GameManager{
 
   public void setBotHand(Hand hand){
     botHand = hand;
-    activity.showBotHand(hand);
+    fragment.showBotHand(hand);
   }
  
   public void killGameThread(){

@@ -7,13 +7,17 @@ import me.kukkii.janken.bot.AbstractBot;
 import me.kukkii.janken.bot.BotManager;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.content.ContentValues;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -26,7 +30,7 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import com.google.ads.*;
 
 
-public class JankenActivity extends Activity {
+public class JankenFragment extends Fragment {
 
   private static final String tag = "janken";
 
@@ -34,20 +38,20 @@ public class JankenActivity extends Activity {
   private GameManager gameManager;
   private boolean resumed;
   
+  private Activity activity = getActivity();
+
   
-  public void onCreate(Bundle savedInstanceState){
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
+  @Override
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+      // Inflate the layout for this fragment
+    
 
-    AdView adView = (AdView)this.findViewById(R.id.adView1);
-    adView.loadAd(new AdRequest());
-
-    MySQLiteOpenHelper.setContext(getApplicationContext());
+    MySQLiteOpenHelper.setContext(activity.getApplicationContext());
     dataManager = MySQLiteOpenHelper.getHelper();
     dataManager.readSQL();
 
-    setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
+    activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    return inflater.inflate(R.layout.main_fragment, container, false);
   }
 
   public void onStart(){
@@ -67,14 +71,6 @@ public class JankenActivity extends Activity {
 
     gameManager = new GameManager(this, dataManager);
     
-    if(!SoundManager.getSoundManager().getBgmIsOn()){
-      SoundManager.getSoundManager().setChangeActivity(false);
-      return;
-    }
-    if(SoundManager.getSoundManager().getChangeActivity() == false){   
-      SoundManager.getSoundManager().startBgm();
-    }
-    SoundManager.getSoundManager().setChangeActivity(false);
   }
 
   public void onPause(){
@@ -82,12 +78,6 @@ public class JankenActivity extends Activity {
     resumed = false;
     gameManager.killGameThread();
     
-    if(!SoundManager.getSoundManager().getBgmIsOn()){
-      return;
-    }
-    if(SoundManager.getSoundManager().getChangeActivity() == false){
-      SoundManager.getSoundManager().stopBgm();
-    }
   }
 
   public boolean isResumed0() {
@@ -100,8 +90,8 @@ public class JankenActivity extends Activity {
 
   public void showMessage(String text) {
     final String text0 = text;
-    final TextView view = (TextView) findViewById(R.id.text);
-    runOnUiThread(new Runnable() {
+    final TextView view = (TextView) activity.findViewById(R.id.text);
+    activity.runOnUiThread(new Runnable() {
       public void run() {
         view.setText(text0);
       }
@@ -110,8 +100,8 @@ public class JankenActivity extends Activity {
 
   public void showBot(AbstractBot bot){
     final int drawableId = bot.getImage();
-    final ImageView view = (ImageView) findViewById(R.id.view_BOT);
-    runOnUiThread(new Runnable() {
+    final ImageView view = (ImageView) activity.findViewById(R.id.view_BOT);
+    activity.runOnUiThread(new Runnable() {
       public void run() {
         view.setImageResource(drawableId); 
       }
@@ -161,8 +151,8 @@ public class JankenActivity extends Activity {
     }
 
     final int drawableId = botHandImage;
-    final ImageView view = (ImageView) findViewById(R.id.view_BOT);
-    runOnUiThread(new Runnable() {
+    final ImageView view = (ImageView) activity.findViewById(R.id.view_BOT);
+    activity.runOnUiThread(new Runnable() {
       public void run() {
         view.setImageResource(drawableId); 
       }
@@ -170,9 +160,17 @@ public class JankenActivity extends Activity {
   }
 
   public void menu(View view) {
-    Intent intent = new Intent(this, MenuActivity.class);
-    startActivity(intent);
-    SoundManager.getSoundManager().setChangeActivity(true);
+    MenuFragment fragment = new MenuFragment();
+    Bundle args = new Bundle();
+    args.putSerializable("type", type);
+    fragment.setArguments(args);
+
+    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.menu_fragment, fragment);
+    transaction.addToBackStack(null);
+
+    // Commit the transaction
+    transaction.commit();
   }
 
 }

@@ -2,12 +2,16 @@
 package me.kukkii.janken;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Gravity;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -15,41 +19,21 @@ import android.widget.LinearLayout.LayoutParams;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 
-public class BotListActivity extends Activity implements View.OnClickListener {
+public class BotListFragment extends Fragment implements View.OnClickListener {
 
   private Button[] buttons;
 
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.botlist);
-
-    init();
-
-    AdView adView = (AdView)this.findViewById(R.id.adViewBotList);
-    adView.loadAd(new AdRequest());
-    
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.botlist_fragment, container, false);
+    init();    
   }
 
   public void onResume(){
 	  super.onResume();
-	  if(!SoundManager.getSoundManager().getBgmIsOn()){
-	      SoundManager.getSoundManager().setChangeActivity(false);
-	      return;
-	    }
-	  if(SoundManager.getSoundManager().getChangeActivity() == false){   
-	    SoundManager.getSoundManager().startBgm();
-	  }
-	  SoundManager.getSoundManager().setChangeActivity(false);
   }
   
   public void onPause(){
     super.onPause();
-    if(!SoundManager.getSoundManager().getBgmIsOn()){
-      return;
-    }
-    if(SoundManager.getSoundManager().getChangeActivity() == false){
-      SoundManager.getSoundManager().stopBgm();
-    }
   }  
   
   private void init() {
@@ -94,9 +78,17 @@ public class BotListActivity extends Activity implements View.OnClickListener {
   }
   
   public void menu(View view) {
-    Intent intent = new Intent(this, MenuActivity.class);
-    startActivity(intent);
-    SoundManager.getSoundManager().setChangeActivity(true);
+    MenuFragment fragment = new MenuFragment();
+    Bundle args = new Bundle();
+    args.putSerializable("type", type);
+    fragment.setArguments(args);
+
+    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.menu_fragment, fragment);
+    transaction.addToBackStack(null);
+
+    // Commit the transaction
+    transaction.commit();
   }
 
   // implements View.onClickListener
@@ -105,7 +97,7 @@ public class BotListActivity extends Activity implements View.OnClickListener {
   }
 
   public void gotoStage(View view) {
-    Intent intent = new Intent(this, JankenActivity.class);
+    Intent intent = new Intent(this, JankenFragment.class);
    /*
     int viewId = view.getId();
     int stageId = getStageId(viewId);
@@ -121,7 +113,6 @@ public class BotListActivity extends Activity implements View.OnClickListener {
     // Log.d("janken", stage.toString());
     intent.putExtra("stage", stage);
     startActivity(intent);
-    SoundManager.getSoundManager().setChangeActivity(true);
   }
 
   /*
