@@ -161,12 +161,9 @@ public class JankenFragment extends Fragment {
 
   public void menu(View view) {
     MenuFragment fragment = new MenuFragment();
-    Bundle args = new Bundle();
-    args.putSerializable("type", type);
-    fragment.setArguments(args);
 
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-    transaction.replace(R.id.menu_fragment, fragment);
+    transaction.replace(R.id.main_fragment, fragment);
     transaction.addToBackStack(null);
 
     // Commit the transaction

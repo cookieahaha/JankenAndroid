@@ -85,7 +85,7 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
     fragment.setArguments(args);
 
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-    transaction.replace(R.id.menu_fragment, fragment);
+    transaction.replace(R.id.main_fragment, fragment);
     transaction.addToBackStack(null);
 
     // Commit the transaction
@@ -110,7 +110,7 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
     // Log.d("janken", stage.toString());
     JankenFragment fragment = new JankenFragment();
     Bundle args = new Bundle();
- //   args.putSerializable("type", type);
+    args.putSerializable("stage", stage);
     fragment.setArguments(args);
 
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();

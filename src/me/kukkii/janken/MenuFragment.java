@@ -33,9 +33,6 @@ public class MenuFragment extends Fragment {
   
   public void startMain(View view) {
     JankenFragment fragment = new JankenFragment();
-    Bundle args = new Bundle();
-    args.putSerializable("type", type);
-    fragment.setArguments(args);
 
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
     transaction.replace(R.id.main_fragment, fragment);
@@ -47,12 +44,9 @@ public class MenuFragment extends Fragment {
   
   public void startBotList(View view) {
     BotListFragment fragment = new BotListFragment();
-    Bundle args = new Bundle();
-    args.putSerializable("type", type);
-    fragment.setArguments(args);
 
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-    transaction.replace(R.id.botlist_fragment, fragment);
+    transaction.replace(R.id.main_fragment, fragment);
     transaction.addToBackStack(null);
 
     // Commit the transaction
