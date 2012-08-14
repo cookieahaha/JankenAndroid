@@ -38,24 +38,22 @@ public class JankenFragment extends Fragment {
   private GameManager gameManager;
   private boolean resumed;
   
-  private Activity activity = getActivity();
+  private Activity activity;;
 
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       // Inflate the layout for this fragment
-    
-
-    MySQLiteOpenHelper.setContext(activity.getApplicationContext());
-    dataManager = MySQLiteOpenHelper.getHelper();
-    dataManager.readSQL();
-
-    activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
     return inflater.inflate(R.layout.main_fragment, container, false);
   }
 
   public void onStart(){
     super.onStart();
+    activity = getActivity();
+    MySQLiteOpenHelper.setContext(activity.getApplicationContext());
+    dataManager = MySQLiteOpenHelper.getHelper();
+    dataManager.readSQL();
+    activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
   }
 
   public void onStop() {

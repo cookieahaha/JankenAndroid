@@ -12,8 +12,7 @@
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal" 
         android:text="START GAME" 
-        android:textColor="#ffffffff"
-        android:onClick="startMain" />
+        android:textColor="#ffffffff" />
     
         <Button xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/button_botlist"
@@ -21,29 +20,7 @@
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal" 
         android:text="Difficulty" 
-        android:textColor="#ffffffff"
-        android:onClick="startBotList" />
+        android:textColor="#ffffffff" />
         
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button_sound"
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content" 
-        android:gravity="center_horizontal" 
-        android:text="Sound" 
-        android:textColor="#ffffffff"
-        android:onClick="startSound" />
 
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BgmOn"
-            android:onClick="setBgmIsOn" />
-
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BgmOff"
-            android:onClick="setBgmIsOff" />
 </LinearLayout>
