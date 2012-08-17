@@ -32,6 +32,7 @@ public class SoundManager {
   boolean loaded = false;
   
   private boolean bgmIsOn = true;
+  private boolean soundpoolIsOn = true;
   
   public SoundManager(Context context) {
 	    bgm = MediaPlayer.create(context, R.raw.bgm1);
@@ -54,7 +55,7 @@ public class SoundManager {
   }
 
   public void stopBgm(){
-    bgm.stop();
+    bgm.pause();
   }
 
   public void setChangeActivity(Boolean changeActivity){
@@ -74,8 +75,10 @@ public class SoundManager {
     float volume = actualVolume / maxVolume;
     // Is the sound loaded already?
     if (loaded) {
-      soundPool.play(soundID, volume, volume, 1, 0, 1f);
-      Log.e("Test", "Played sound");
+      if(soundpoolIsOn){
+        soundPool.play(soundID, volume, volume, 1, 0, 1f);
+    //  Log.e("Test", "Played sound");
+      }
     }
   }
 
@@ -88,8 +91,10 @@ public class SoundManager {
     float volume = actualVolume / maxVolume;
     // Is the sound loaded already?
     if (loaded) {
-      soundPool.play(soundID, volume, volume, 1, 0, 1f);
-      Log.e("Test", "Played sound");
+      if(soundpoolIsOn){
+        soundPool.play(soundID, volume, volume, 1, 0, 1f);
+     // Log.e("Test", "Played sound");
+      }
     }
   }
   
@@ -102,11 +107,13 @@ public class SoundManager {
     float volume = actualVolume / maxVolume;
     // Is the sound loaded already?
     if (loaded) {
-      soundPool.play(soundID, volume, volume, 1, 0, 1f);
-      Log.e("Test", "Played sound");
+      if(soundpoolIsOn){
+        soundPool.play(soundID, volume, volume, 1, 0, 1f);
+ //     Log.e("Test", "Played sound");
+      }
     }
   }
-
+  
   public void setBgmIsOn(boolean bgmIsOn){
     this.bgmIsOn = bgmIsOn;
   }
@@ -115,4 +122,11 @@ public class SoundManager {
     return bgmIsOn;
   }
   
+  public void setSoundpoolIsOn(boolean soundpoolIsOn){
+    this.soundpoolIsOn = soundpoolIsOn;
+  }
+  
+  public boolean getSoundpoolIsOn(){
+    return soundpoolIsOn;
+  }
 }

@@ -15,7 +15,6 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:onClick="menu"
             android:text="@string/button_MENU"/>
 
         <ImageView android:id="@+id/view_BOT"
@@ -40,21 +39,18 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:onClick="onClickHand" 
             android:src="@drawable/hand_rock" />
 
         <ImageButton android:id="@+id/button_SCISSOR"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:onClick="onClickHand" 
             android:src="@drawable/hand_scissor" />
 
         <ImageButton android:id="@+id/button_PAPER"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:onClick="onClickHand" 
             android:src="@drawable/hand_paper" />
     </LinearLayout>
 </LinearLayout>
