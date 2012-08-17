@@ -6,20 +6,18 @@
     android:background="@drawable/girl_orange"
     >
 
-        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        <ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/button_bgm"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal" 
-        android:text="Bgm" 
         android:textColor="#ffffffff" />
     
-       <Button xmlns:android="http://schemas.android.com/apk/res/android"
+       <ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/button_sound"
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
         android:gravity="center_horizontal" 
-        android:text="sound" 
         android:textColor="#ffffffff" />
         
 </LinearLayout>

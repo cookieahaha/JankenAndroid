@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 public class SoundFragment extends Fragment implements OnClickListener {
   
   private SoundManager soundManager = null;
-     
+  private ImageButton button;
+  private ImageButton button2;
+  
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
     soundManager = soundManager.getSoundManager();
@@ -26,9 +29,11 @@ public class SoundFragment extends Fragment implements OnClickListener {
  
   public void onStart(){
     super.onStart();
-    Button button = (Button)getActivity().findViewById(R.id.button_bgm);
+    button = (ImageButton)getActivity().findViewById(R.id.button_bgm);
+    button.setImageResource(soundManager.getBgmIsOn()?R.drawable.sound_on_120px_vista_kmixdocked:R.drawable.sound_off_120px_vista_kmixdocked_error);
     button.setOnClickListener(this);
-    Button button2 = (Button)getActivity().findViewById(R.id.button_sound);
+    button2 = (ImageButton)getActivity().findViewById(R.id.button_sound);
+    button2.setImageResource(soundManager.getSoundpoolIsOn()?R.drawable.sound_on_120px_vista_kmixdocked:R.drawable.sound_off_120px_vista_kmixdocked_error);
     button2.setOnClickListener(this);
    
     soundManager.setBgmIsOn(true);
@@ -46,6 +51,7 @@ public class SoundFragment extends Fragment implements OnClickListener {
         soundManager.setBgmIsOn(true);
         soundManager.startBgm();
       }
+      button.setImageResource(soundManager.getBgmIsOn()?R.drawable.sound_on_120px_vista_kmixdocked:R.drawable.sound_off_120px_vista_kmixdocked_error);
     }
     if(id == R.id.button_sound){
       if(soundManager.getSoundpoolIsOn()){
@@ -55,6 +61,7 @@ public class SoundFragment extends Fragment implements OnClickListener {
       else{
         soundManager.setSoundpoolIsOn(true);
       }
+      button2.setImageResource(soundManager.getSoundpoolIsOn()?R.drawable.sound_on_120px_vista_kmixdocked:R.drawable.sound_off_120px_vista_kmixdocked_error);
     }
   }
  
