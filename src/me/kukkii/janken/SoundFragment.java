@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 
@@ -56,7 +55,6 @@ public class SoundFragment extends Fragment implements OnClickListener {
     if(id == R.id.button_sound){
       if(soundManager.getSoundpoolIsOn()){
         soundManager.setSoundpoolIsOn(false);
-        return;
       }
       else{
         soundManager.setSoundpoolIsOn(true);
