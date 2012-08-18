@@ -11,12 +11,6 @@
         android:layout_height="0dp"
         android:layout_weight="4">
 
-        <Button android:id="@+id/button_MENU"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:text="@string/button_MENU"/>
-
         <ImageView android:id="@+id/view_BOT"
             android:layout_weight="8"
             android:layout_height="fill_parent"

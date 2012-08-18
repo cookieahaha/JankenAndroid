@@ -157,15 +157,5 @@ public class JankenFragment extends Fragment {
     });
   }
 
-  public void menu(View view) {
-    MenuFragment fragment = new MenuFragment();
-
-    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-    transaction.replace(R.id.main_fragment, fragment);
-    transaction.addToBackStack(null);
-
-    // Commit the transaction
-    transaction.commit();
-  }
 
 }
