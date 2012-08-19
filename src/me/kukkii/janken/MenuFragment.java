@@ -19,7 +19,7 @@ public class MenuFragment extends Fragment implements OnClickListener{
     MySQLiteOpenHelper.setContext(activity.getApplicationContext());
     return inflater.inflate(R.layout.menu_fragment, container, false);
   }
-
+  
   public void onStart(){
     super.onStart();
     Button button = (Button)getActivity().findViewById(R.id.button_back);
@@ -38,7 +38,6 @@ public class MenuFragment extends Fragment implements OnClickListener{
   
   public void startMain(View view) {
     JankenFragment fragment = new JankenFragment();
-
     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
     transaction.replace(R.id.main_fragment, fragment);
     transaction.addToBackStack(null);

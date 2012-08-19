@@ -38,8 +38,7 @@ public class JankenFragment extends Fragment {
   private GameManager gameManager;
   private boolean resumed;
   
-  private Activity activity;;
-
+  private Activity activity;;  
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +65,6 @@ public class JankenFragment extends Fragment {
   public void onResume(){
     super.onResume();
     resumed = true; 
-
     gameManager = new GameManager(this, dataManager);
     
   }
@@ -75,7 +73,7 @@ public class JankenFragment extends Fragment {
     super.onPause();
     resumed = false;
     gameManager.killGameThread();
-    
+
   }
 
   public boolean isResumed0() {

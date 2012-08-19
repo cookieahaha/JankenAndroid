@@ -22,6 +22,7 @@ public class SoundFragment extends Fragment implements OnClickListener {
     if (soundManager == null) {
       SoundManager.setContext( getActivity() );
       soundManager = SoundManager.getSoundManager();
+      soundManager.setBgmIsOn(true);
     }
     return inflater.inflate(R.layout.sound_fragment, container, false);
   }
@@ -34,8 +35,6 @@ public class SoundFragment extends Fragment implements OnClickListener {
     button2 = (ImageButton)getActivity().findViewById(R.id.button_sound);
     button2.setImageResource(soundManager.getSoundpoolIsOn()?R.drawable.sound_on_120px_vista_kmixdocked:R.drawable.sound_off_120px_vista_kmixdocked_error);
     button2.setOnClickListener(this);
-   
-    soundManager.setBgmIsOn(true);
     soundManager.startBgm();
   }
  
@@ -65,10 +64,14 @@ public class SoundFragment extends Fragment implements OnClickListener {
  
   public void onResume(){
     super.onResume();
+    if(!soundManager.getBgmIsOn()){
+      soundManager.stopBgm();
+    }
   }
 
   public void onPause(){
     super.onPause();
+    soundManager.stopBgm();
   }  
   
 }

@@ -24,9 +24,7 @@ public class SoundManager {
   }
   //
   
-  private MediaPlayer bgm;
-  private boolean changeActivity;
-  
+  private MediaPlayer bgm;  
   private SoundPool soundPool;
   private int soundID;
   boolean loaded = false;
@@ -56,14 +54,6 @@ public class SoundManager {
 
   public void stopBgm(){
     bgm.pause();
-  }
-
-  public void setChangeActivity(Boolean changeActivity){
-	  this.changeActivity = changeActivity;
-  }
-
-  public boolean getChangeActivity(){
-	  return changeActivity;
   }
   
   public void jan(){
