@@ -73,7 +73,6 @@ public class JankenFragment extends Fragment {
     super.onPause();
     resumed = false;
     gameManager.killGameThread();
-
   }
 
   public boolean isResumed0() {

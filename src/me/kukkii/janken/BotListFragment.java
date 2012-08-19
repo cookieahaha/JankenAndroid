@@ -77,20 +77,6 @@ public class BotListFragment extends Fragment implements View.OnClickListener {
       }
     }
   }
-  
-  public void menu(View view) {
-    MenuFragment fragment = new MenuFragment();
-    Bundle args = new Bundle();
- //   args.putSerializable("type", type);
-    fragment.setArguments(args);
-
-    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-    transaction.replace(R.id.main_fragment, fragment);
-    transaction.addToBackStack(null);
-
-    // Commit the transaction
-    transaction.commit();
-  }
 
   // implements View.onClickListener
   public void onClick(View view) {

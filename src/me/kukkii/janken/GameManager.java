@@ -48,7 +48,9 @@ public class GameManager{
     new Thread(new Runnable() {
       public void run() {
         sleep(timeTilPon + bot.getTiming());
-        setBotHand( bot.hand2(userHand) );
+        if(gameIsRunning){
+          setBotHand( bot.hand2(userHand) );
+        }
       }
     }).start();
   }
@@ -129,4 +131,5 @@ public class GameManager{
  //   gameThread.stop();
     gameIsRunning = false;
   }
+    
 }
