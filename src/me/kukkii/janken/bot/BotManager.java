@@ -26,13 +26,13 @@ public class BotManager {
     bots = new ArrayList<Player>();
     map = new HashMap<String, Player>();
     add(new TimingBot());
-/*    add(new Rock100Bot());
+    add(new Rock100Bot());
     add(new Scissor100Bot());
     add(new Paper100Bot());
     add(new RotationBot());
     add(new RandomBot());
     add(new God());
-*/  }
+  }
 
   private void add(Player bot) {
     bots.add(bot);

@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.TextView;
@@ -30,15 +32,18 @@ import android.media.SoundPool.OnLoadCompleteListener;
 import com.google.ads.*;
 
 
-public class JankenFragment extends Fragment {
+public class JankenFragment extends Fragment implements OnClickListener {
 
   private static final String tag = "janken";
 
   private MySQLiteOpenHelper dataManager;
   private GameManager gameManager;
-  private boolean resumed;
   
   private Activity activity;;  
+  
+  private ImageButton button_rock;
+  private ImageButton button_scissor;
+  private ImageButton button_paper;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,6 +58,13 @@ public class JankenFragment extends Fragment {
     dataManager = MySQLiteOpenHelper.getHelper();
     dataManager.readSQL();
     activity.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+    
+    button_rock = (ImageButton)getActivity().findViewById(R.id.button_ROCK);
+    button_rock.setOnClickListener(this);
+    button_scissor = (ImageButton)getActivity().findViewById(R.id.button_SCISSOR);
+    button_scissor.setOnClickListener(this);
+    button_paper = (ImageButton)getActivity().findViewById(R.id.button_PAPER);
+    button_paper.setOnClickListener(this);
   }
 
   public void onStop() {
@@ -64,19 +76,13 @@ public class JankenFragment extends Fragment {
 
   public void onResume(){
     super.onResume();
-    resumed = true; 
     gameManager = new GameManager(this, dataManager);
     
   }
 
   public void onPause(){
     super.onPause();
-    resumed = false;
     gameManager.killGameThread();
-  }
-
-  public boolean isResumed0() {
-    return resumed;
   }
 
   public void showResult(String text) {
@@ -118,7 +124,7 @@ public class JankenFragment extends Fragment {
     SoundManager.getSoundManager().pon();
   }
 
-  public void onClickHand(View view){
+  public void onClick(View view){
     int id = view.getId();
     Hand hand = null;
     if (id == R.id.button_ROCK) {

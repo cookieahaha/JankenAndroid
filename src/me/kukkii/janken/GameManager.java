@@ -36,6 +36,7 @@ public class GameManager{
     userHand = Hand.UNKNOWN;
     bot =(AbstractBot) BotManager.getManager().next();
     fragment.showBot(bot);
+    fragment.showResult(bot.getName());
 
     gameThread = new Thread(new Runnable() {
       public void run() {
@@ -44,15 +45,6 @@ public class GameManager{
       }
     });
     gameThread.start();
-
-    new Thread(new Runnable() {
-      public void run() {
-        sleep(timeTilPon + bot.getTiming());
-        if(gameIsRunning){
-          setBotHand( bot.hand2(userHand) );
-        }
-      }
-    }).start();
   }
 
   public void sleep(int msec) {
@@ -76,7 +68,7 @@ public class GameManager{
   }
 
   public void afterPon(){
-    if(! fragment.isResumed0()){
+    if(!gameIsRunning){
       return;
     }
     result = judge.judge(userHand, botHand);
@@ -85,6 +77,15 @@ public class GameManager{
   }
 
   public void game() {
+    new Thread(new Runnable() {
+      public void run() {
+        sleep(timeTilPon + bot.getTiming());
+        if(gameIsRunning){
+          setBotHand( bot.hand2(userHand) );
+        }
+      }
+    }).start();
+    
     sleep(timeJan);
     if(!gameIsRunning){
       return;
@@ -105,15 +106,15 @@ public class GameManager{
       return;
     }
     afterPon();
-    if(! fragment.isResumed0()){
+    if(!gameIsRunning){
       return;
     }
     sleep(timeTilNewGame);
     if(!gameIsRunning){
       return;
     }
-    if(! fragment.isResumed0()){
-      return;
+    while(result == Result.DRAW){
+      game();
     }
     startGame();
   }
