@@ -22,15 +22,21 @@ import com.google.ads.AdView;
 public class BotListFragment extends Fragment implements View.OnClickListener {
 
   private Button[] buttons;
-  private Activity activity = getActivity();
+  private Activity activity;
   
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    activity = getActivity();
     return inflater.inflate(R.layout.botlist_fragment, container, false);
   }
 
+  public void onStart(){
+    super.onStart();
+    init();
+  }
+
   public void onResume(){
-	  super.onResume();
+    super.onResume();
   }
   
   public void onPause(){
