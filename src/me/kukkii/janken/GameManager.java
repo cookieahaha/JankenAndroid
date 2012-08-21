@@ -26,11 +26,18 @@ public class GameManager{
   private boolean gameIsRunning;
   private Stage stage = null;
   
+  private int win;
+  private int lose;
+  
   public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager, Stage stage) {
     this.fragment = activity;
     this.dataManager = dataManager;
     this.stage = stage;
     judge = new Judge();
+    
+    win = 0;
+    lose = 0;
+    
     startGame();
   }
   
@@ -43,8 +50,11 @@ public class GameManager{
      }
     
     fragment.showBot(bot);
-    fragment.showResult(bot.getName());
-
+    
+    if(win == 0 && lose == 0){
+      fragment.showResult(bot.getName());
+    }
+    
     gameThread = new Thread(new Runnable() {
       public void run() {
         gameIsRunning = true;
@@ -84,7 +94,7 @@ public class GameManager{
   }
 
   public void game() {
-    while(true){
+    while(true){     
       userHand = Hand.UNKNOWN;
       new Thread(new Runnable() {
         public void run() {
@@ -123,6 +133,20 @@ public class GameManager{
         return;
       }
       if(result != Result.DRAW){
+        break;
+      }
+      if(result == Result.WIN){
+        win +=1;
+      }
+      if(result == Result.LOSE){
+        lose +=1;
+      }    
+      if(win == 2){
+        fragment.showResult("YOU WIN!!!");
+        break;
+      }
+      if(lose == 2){
+        fragment.showResult("YOU LOSE!!!");
         break;
       }
     }
