@@ -106,7 +106,7 @@ public class GameManager{
 
       sleep(1000);
       
-      StageManager.getManager().getStage(stage.getId()+1);
+      stage = StageManager.getManager().getStage(stage.getId()+1);
     }
     if(lose == 2){
       fragment.showResult("YOU LOSE!!!");
