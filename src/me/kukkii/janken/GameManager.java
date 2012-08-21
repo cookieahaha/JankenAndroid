@@ -1,5 +1,6 @@
 package me.kukkii.janken;
 
+import android.support.v4.app.FragmentTransaction;
 import me.kukkii.janken.bot.AbstractBot;
 import me.kukkii.janken.bot.BotManager;
 
@@ -90,11 +91,41 @@ public class GameManager{
     }
     result = judge.judge(userHand, botHand);
     dataManager.writeResultToSQL(result);
-    fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result));
+    fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result,stage.getId()));
+    
+    if(result == Result.WIN){
+      win +=1;
+    }
+    if(result == Result.LOSE){
+      lose +=1;
+    }    
+    if(win == 2){
+      fragment.showResult("YOU WIN!!!");
+      win = 0;
+      lose = 0;
+
+      sleep(1000);
+      
+      StageManager.getManager().getStage(stage.getId()+1);
+    }
+    if(lose == 2){
+      fragment.showResult("YOU LOSE!!!");
+      win = 0;
+      lose = 0;
+      
+      sleep(1000);
+      
+      BotListFragment fragment2 = new BotListFragment();
+      FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
+      transaction.replace(R.id.main_fragment, fragment2);
+      transaction.addToBackStack(null);
+      // Commit the transaction
+      transaction.commit();
+    }
   }
 
   public void game() {
-    while(true){     
+    while(true){   // loop during draw    
       userHand = Hand.UNKNOWN;
       new Thread(new Runnable() {
         public void run() {
@@ -127,26 +158,12 @@ public class GameManager{
       afterPon();
       if(!gameIsRunning){
         return;
-      }
+      }      
       sleep(timeTilNewGame);
       if(!gameIsRunning){
         return;
       }
       if(result != Result.DRAW){
-        break;
-      }
-      if(result == Result.WIN){
-        win +=1;
-      }
-      if(result == Result.LOSE){
-        lose +=1;
-      }    
-      if(win == 2){
-        fragment.showResult("YOU WIN!!!");
-        break;
-      }
-      if(lose == 2){
-        fragment.showResult("YOU LOSE!!!");
         break;
       }
     }

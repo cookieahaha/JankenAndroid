@@ -122,8 +122,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     return history;
   }
 
-  public String getResultAsString(AbstractBot bot, Hand userHand, Hand botHand, Result result){
-    String text = bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history(result);
+  public String getResultAsString(AbstractBot bot, Hand userHand, Hand botHand, Result result, int stageId){
+    String text = bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history(result) + "\n" + "Stage Id: " + stageId;
     return text;
   }
 
