@@ -24,17 +24,24 @@ public class GameManager{
   private Thread gameThread;
   
   private boolean gameIsRunning;
+  private Stage stage = null;
   
-  public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager) {
+  public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager, Stage stage) {
     this.fragment = activity;
     this.dataManager = dataManager;
+    this.stage = stage;
     judge = new Judge();
     startGame();
   }
-
+  
   private void startGame(){
-    userHand = Hand.UNKNOWN;
-    bot =(AbstractBot) BotManager.getManager().next();
+    if(stage == null){   // random mode
+      bot =(AbstractBot) BotManager.getManager().next();
+     }
+     else{  // stage mode
+       bot = stage.getBot();
+     }
+    
     fragment.showBot(bot);
     fragment.showResult(bot.getName());
 
@@ -78,6 +85,7 @@ public class GameManager{
 
   public void game() {
     while(true){
+      userHand = Hand.UNKNOWN;
       new Thread(new Runnable() {
         public void run() {
           sleep(timeTilPon + bot.getTiming());
