@@ -67,7 +67,7 @@ public class SoundManager {
     if (loaded) {
       if(soundpoolIsOn){
         soundPool.play(soundID, volume, volume, 1, 0, 1f);
-    //  Log.e("Test", "Played sound");
+      Log.e("Test", "Played sound");
       }
     }
   }

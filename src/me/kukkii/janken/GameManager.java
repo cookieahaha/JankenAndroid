@@ -77,44 +77,46 @@ public class GameManager{
   }
 
   public void game() {
-    new Thread(new Runnable() {
-      public void run() {
-        sleep(timeTilPon + bot.getTiming());
-        if(gameIsRunning){
-          setBotHand( bot.hand2(userHand) );
+    while(true){
+      new Thread(new Runnable() {
+        public void run() {
+          sleep(timeTilPon + bot.getTiming());
+          if(gameIsRunning){
+            setBotHand( bot.hand2(userHand) );
+          }
         }
-      }
-    }).start();
+      }).start();
     
-    sleep(timeJan);
-    if(!gameIsRunning){
-      return;
-    }
-    jan();
-    sleep(timeKen);
-    if(!gameIsRunning){
-      return;
-    }
-    ken();
-    sleep(timePon);
-    if(!gameIsRunning){
-      return;
-    }
-    pon();
-    sleep(timeAfterPon);
-    if(!gameIsRunning){
-      return;
-    }
-    afterPon();
-    if(!gameIsRunning){
-      return;
-    }
-    sleep(timeTilNewGame);
-    if(!gameIsRunning){
-      return;
-    }
-    while(result == Result.DRAW){
-      game();
+      sleep(timeJan);
+      if(!gameIsRunning){
+        return;
+      }
+      jan();
+      sleep(timeKen);
+      if(!gameIsRunning){
+        return;
+      }
+      ken();
+      sleep(timePon);
+      if(!gameIsRunning){
+        return;
+      }
+      pon();
+      sleep(timeAfterPon);
+      if(!gameIsRunning){
+        return;
+      }
+      afterPon();
+      if(!gameIsRunning){
+        return;
+      }
+      sleep(timeTilNewGame);
+      if(!gameIsRunning){
+        return;
+      }
+      if(result != Result.DRAW){
+        break;
+      }
     }
     startGame();
   }
