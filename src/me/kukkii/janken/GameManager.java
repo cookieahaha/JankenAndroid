@@ -1,5 +1,6 @@
 package me.kukkii.janken;
 
+import android.app.Activity;
 import android.support.v4.app.FragmentTransaction;
 import me.kukkii.janken.bot.AbstractBot;
 import me.kukkii.janken.bot.BotManager;

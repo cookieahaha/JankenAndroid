@@ -33,7 +33,13 @@ public class SoundManager {
   private boolean bgmIsOn = true;
   private boolean soundpoolIsOn = true;
   
+  private int currentSong = R.raw.bgm1;
+  
+  private Context context;
+  
   public SoundManager(Context context) {
+        this.context = context;
+        
 	    bgm = MediaPlayer.create(context, R.raw.bgm1);
 	    
 	    soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
@@ -54,9 +60,13 @@ public class SoundManager {
   }
 
   public void changeBgm(AbstractBot bot){
-    stopBgm();
-    bgm.selectTrack(bot.getSong());
-    startBgm();
+    if(bot.getSong() != currentSong){
+      bgm.stop();
+      bgm = MediaPlayer.create(context, bot.getSong());
+      startBgm();
+      
+      currentSong = bot.getSong();
+    }
   }
   
   public void stopBgm(){
