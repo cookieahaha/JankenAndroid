@@ -31,4 +31,8 @@ public class God extends AbstractBot {
     return R.drawable.girl_yellow;
   }
 
+  public int getSong(){
+    return R.raw.boss;
+  }
+  
 }

@@ -24,4 +24,7 @@ public class Rock100Bot extends AbstractBot {
     return R.drawable.girl_blue;
   }
 
+  public int getSong(){
+    return R.raw.bgm1;
+  }
 }

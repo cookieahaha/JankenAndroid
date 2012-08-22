@@ -24,5 +24,8 @@ public class Paper100Bot extends AbstractBot {
     return R.drawable.girl_orange;
   }
 
+  public int getSong(){
+    return R.raw.bgm1;
+  }
 }
 

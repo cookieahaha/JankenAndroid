@@ -30,4 +30,7 @@ public class RotationBot extends AbstractBot {
     return R.drawable.girl_red;
   }
 
+  public int getSong(){
+    return R.raw.bgm1;
+  }
 }

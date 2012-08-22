@@ -7,6 +7,7 @@ import android.media.SoundPool;
 import android.media.SoundPool.OnLoadCompleteListener;
 import android.util.Log;
 import static android.content.Context.AUDIO_SERVICE;
+import me.kukkii.janken.bot.*;
 
 public class SoundManager {
 
@@ -52,6 +53,12 @@ public class SoundManager {
     bgm.setVolume(0.3F, 0.3F);
   }
 
+  public void changeBgm(AbstractBot bot){
+    stopBgm();
+    bgm.selectTrack(bot.getSong());
+    startBgm();
+  }
+  
   public void stopBgm(){
     bgm.pause();
   }

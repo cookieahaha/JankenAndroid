@@ -39,4 +39,6 @@ abstract public class AbstractBot extends AbstractPlayer {
 	  return 0;
   }
 
+  abstract public int getSong();
+  
 }

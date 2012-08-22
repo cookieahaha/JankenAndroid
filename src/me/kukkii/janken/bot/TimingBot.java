@@ -36,5 +36,8 @@ public class TimingBot extends AbstractBot {
 	return -1000;  
   }
   
+  public int getSong(){
+    return R.raw.bgm1;
+  }
 }
 

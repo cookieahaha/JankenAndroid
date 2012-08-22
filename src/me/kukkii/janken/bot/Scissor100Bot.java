@@ -24,4 +24,7 @@ public class Scissor100Bot extends AbstractBot {
     return R.drawable.girl_safari;
   }
 
+  public int getSong(){
+    return R.raw.bgm1;
+  }
 }
