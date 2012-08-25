@@ -36,16 +36,16 @@ public class God extends AbstractBot {
   }
   
   public int getJan(){
-    return R.raw.janken;
+    return R.raw.janken2;
   }
 
   public int getKen(){
-    return R.raw.janken;
+    return R.raw.janken2;
 
   }
 
   public int getPon(){
-    return R.raw.janken;
+    return R.raw.janken2;
   }
   
 }

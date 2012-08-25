@@ -60,8 +60,8 @@ public class SoundManager {
 	    soundJan = soundPool.load(context, R.raw.janken, 1);
 	    soundKen = soundPool.load(context, R.raw.janken, 1);
 	    soundPon = soundPool.load(context, R.raw.janken, 1);
-        soundWin = soundPool.load(context, R.raw.janken, 1);
-        soundLose = soundPool.load(context, R.raw.janken, 1);
+        soundWin = soundPool.load(context, R.raw.win, 1);
+        soundLose = soundPool.load(context, R.raw.lose, 1);
 
   }
 
