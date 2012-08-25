@@ -10,17 +10,20 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.res.Resources;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ContentValues;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -44,6 +47,8 @@ public class JankenFragment extends Fragment implements OnClickListener {
   private ImageButton button_rock;
   private ImageButton button_scissor;
   private ImageButton button_paper;
+  
+  private PopupWindow popupWindow;
   
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -161,6 +166,32 @@ public class JankenFragment extends Fragment implements OnClickListener {
     activity.runOnUiThread(new Runnable() {
       public void run() {
         view.setImageResource(drawableId); 
+      }
+    });
+  }
+  
+  public void showPopup(String string){
+    final String string2 = string;
+
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup, (ViewGroup) activity.findViewById(R.id.popupWindow));
+        popupWindow = new PopupWindow(popupView, 300, 400, true);
+        popupWindow.showAtLocation(activity.findViewById(R.id.view_BOT), Gravity.CENTER, 0, 0);
+
+        TextView textView = (TextView) popupView.findViewById(R.id.popupText);
+        textView.setText(string2);
+      }
+    });
+    try{
+      Thread.sleep(3000);
+    }
+    catch (InterruptedException e){
+    }
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        popupWindow.dismiss();
       }
     });
   }

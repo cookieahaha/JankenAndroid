@@ -103,7 +103,8 @@ public class GameManager{
       lose +=1;
     }    
     if(win == 2){
-      fragment.showResult("YOU WIN!!!");
+    //  fragment.showResult("YOU WIN!!!");
+      fragment.showPopup("you win!!!");
       SoundManager.getSoundManager().win();
 
       win = 0;
@@ -113,9 +114,11 @@ public class GameManager{
       stage = StageManager.getManager().getStage(stage.getId()+1);      
     }
     if(lose == 2){
-      fragment.showResult("YOU LOSE!!!");
+     // fragment.showResult("YOU LOSE!!!");
+      fragment.showPopup("you lose!!!");
       SoundManager.getSoundManager().lose();
 
+      
       win = 0;
       lose = 0;      
       sleep(1000);
