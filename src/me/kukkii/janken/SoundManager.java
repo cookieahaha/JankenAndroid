@@ -27,7 +27,14 @@ public class SoundManager {
   
   private MediaPlayer bgm;  
   private SoundPool soundPool;
-  private int soundID;
+  
+  private int soundJan;
+  private int soundKen;
+  private int soundPon;
+  private int soundWin;
+  private int soundLose;
+
+  
   boolean loaded = false;
   
   private boolean bgmIsOn = true;
@@ -50,7 +57,12 @@ public class SoundManager {
 	        loaded = true;
 	      }
 	    });
-	    soundID = soundPool.load(context, R.raw.janken, 1);
+	    soundJan = soundPool.load(context, R.raw.janken, 1);
+	    soundKen = soundPool.load(context, R.raw.janken, 1);
+	    soundPon = soundPool.load(context, R.raw.janken, 1);
+        soundWin = soundPool.load(context, R.raw.janken, 1);
+        soundLose = soundPool.load(context, R.raw.janken, 1);
+
   }
 
   public void startBgm(){
@@ -69,6 +81,18 @@ public class SoundManager {
     }
   }
   
+  public void changeSoundpool(AbstractBot bot){
+    if(bot.getJan() != soundJan){
+      soundJan = soundPool.load(context, bot.getJan(), 1);
+    }
+    if(bot.getKen() != soundKen){
+      soundKen = soundPool.load(context, bot.getKen(), 1);
+    }
+    if(bot.getPon() != soundPon){
+      soundPon = soundPool.load(context, bot.getPon(), 1);
+    }
+  }
+  
   public void stopBgm(){
     bgm.pause();
   }
@@ -83,7 +107,7 @@ public class SoundManager {
     // Is the sound loaded already?
     if (loaded) {
       if(soundpoolIsOn){
-        soundPool.play(soundID, volume, volume, 1, 0, 1f);
+        soundPool.play(soundJan, volume, volume, 1, 0, 1f);
       Log.e("Test", "Played sound");
       }
     }
@@ -99,7 +123,7 @@ public class SoundManager {
     // Is the sound loaded already?
     if (loaded) {
       if(soundpoolIsOn){
-        soundPool.play(soundID, volume, volume, 1, 0, 1f);
+        soundPool.play(soundKen, volume, volume, 1, 0, 1f);
      // Log.e("Test", "Played sound");
       }
     }
@@ -115,7 +139,39 @@ public class SoundManager {
     // Is the sound loaded already?
     if (loaded) {
       if(soundpoolIsOn){
-        soundPool.play(soundID, volume, volume, 1, 0, 1f);
+        soundPool.play(soundPon, volume, volume, 1, 0, 1f);
+ //     Log.e("Test", "Played sound");
+      }
+    }
+  }
+  
+  public void win(){
+    AudioManager audioManager = (AudioManager) _context.getSystemService(AUDIO_SERVICE);
+    float actualVolume = (float) audioManager
+        .getStreamVolume(AudioManager.STREAM_MUSIC);
+    float maxVolume = (float) audioManager
+        .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+    float volume = actualVolume / maxVolume;
+    // Is the sound loaded already?
+    if (loaded) {
+      if(soundpoolIsOn){
+        soundPool.play(soundWin, volume, volume, 1, 0, 1f);
+ //     Log.e("Test", "Played sound");
+      }
+    }
+  }
+  
+  public void lose(){
+    AudioManager audioManager = (AudioManager) _context.getSystemService(AUDIO_SERVICE);
+    float actualVolume = (float) audioManager
+        .getStreamVolume(AudioManager.STREAM_MUSIC);
+    float maxVolume = (float) audioManager
+        .getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+    float volume = actualVolume / maxVolume;
+    // Is the sound loaded already?
+    if (loaded) {
+      if(soundpoolIsOn){
+        soundPool.play(soundLose, volume, volume, 1, 0, 1f);
  //     Log.e("Test", "Played sound");
       }
     }

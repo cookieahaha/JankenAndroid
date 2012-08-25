@@ -41,4 +41,10 @@ abstract public class AbstractBot extends AbstractPlayer {
 
   abstract public int getSong();
   
+  abstract public int getJan();
+
+  abstract public int getKen();
+
+  abstract public int getPon();
+
 }

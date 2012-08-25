@@ -35,4 +35,17 @@ public class God extends AbstractBot {
     return R.raw.boss;
   }
   
+  public int getJan(){
+    return R.raw.janken;
+  }
+
+  public int getKen(){
+    return R.raw.janken;
+
+  }
+
+  public int getPon(){
+    return R.raw.janken;
+  }
+  
 }

@@ -53,6 +53,7 @@ public class GameManager{
     
     fragment.showBot(bot);
     SoundManager.getSoundManager().changeBgm(bot);
+    SoundManager.getSoundManager().changeSoundpool(bot);
     
     if(win == 0 && lose == 0){
       fragment.showResult(bot.getName());
@@ -103,18 +104,20 @@ public class GameManager{
     }    
     if(win == 2){
       fragment.showResult("YOU WIN!!!");
-      win = 0;
-      lose = 0;
+      SoundManager.getSoundManager().win();
 
+      win = 0;
+      lose = 0;      
       sleep(1000);
       
       stage = StageManager.getManager().getStage(stage.getId()+1);      
     }
     if(lose == 2){
       fragment.showResult("YOU LOSE!!!");
+      SoundManager.getSoundManager().lose();
+
       win = 0;
-      lose = 0;
-      
+      lose = 0;      
       sleep(1000);
       
       BotListFragment fragment2 = new BotListFragment();

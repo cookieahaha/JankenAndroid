@@ -33,4 +33,17 @@ public class RotationBot extends AbstractBot {
   public int getSong(){
     return R.raw.bgm1;
   }
+  
+  public int getJan(){
+    return R.raw.janken;
+  }
+
+  public int getKen(){
+    return R.raw.janken;
+
+  }
+
+  public int getPon(){
+    return R.raw.janken;
+  }
 }
