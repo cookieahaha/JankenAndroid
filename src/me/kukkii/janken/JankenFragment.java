@@ -176,7 +176,7 @@ public class JankenFragment extends Fragment implements OnClickListener {
     activity.runOnUiThread(new Runnable() {
       public void run() {
         LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup, (ViewGroup) activity.findViewById(R.id.popupWindow));
+        View popupView = inflater.inflate(R.layout.popup_view, (ViewGroup) activity.findViewById(R.id.popupWindow));
         popupWindow = new PopupWindow(popupView, 300, 400, true);
         popupWindow.showAtLocation(activity.findViewById(R.id.view_BOT), Gravity.CENTER, 0, 0);
 

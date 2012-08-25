@@ -16,11 +16,11 @@ public class GameManager{
   private Hand botHand;
   private Result result;
 
-  private static final int timeJan = 2500;
+  private static final int timeJan = 2000;
   private static final int timeKen = 1000;
   private static final int timePon = 1000;
   private static final int timeAfterPon = 50;
-  private static final int timeTilNewGame = 2500;
+  private static final int timeTilNewGame = 1000;
   private static final int timeTilPon = timeJan + timeKen + timePon;
 
   private Thread gameThread;
@@ -109,7 +109,7 @@ public class GameManager{
 
       win = 0;
       lose = 0;      
-      sleep(1000);
+   //   sleep(1000);
       
       stage = StageManager.getManager().getStage(stage.getId()+1);      
     }
@@ -121,7 +121,7 @@ public class GameManager{
       
       win = 0;
       lose = 0;      
-      sleep(1000);
+  //    sleep(1000);
       
       BotListFragment fragment2 = new BotListFragment();
       FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
