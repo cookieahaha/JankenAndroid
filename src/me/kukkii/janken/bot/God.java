@@ -9,6 +9,7 @@ public class God extends AbstractBot {
 
   public God(){
     super();
+    hp = 3;
   }
 
   public God(long id, String name){

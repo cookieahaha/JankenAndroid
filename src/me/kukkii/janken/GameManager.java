@@ -11,6 +11,7 @@ public class GameManager{
   private MySQLiteOpenHelper dataManager;
 
   private Judge judge;
+  private User user;
   private AbstractBot bot;
   private Hand userHand;
   private Hand botHand;
@@ -28,18 +29,12 @@ public class GameManager{
   private boolean gameIsRunning;
   private Stage stage = null;
   
-  private int win;
-  private int lose;
-  
   public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager, Stage stage) {
     this.fragment = activity;
     this.dataManager = dataManager;
     this.stage = stage;
     judge = new Judge();
-    
-    win = 0;
-    lose = 0;
-    
+        
     startGame();
   }
   
@@ -54,11 +49,8 @@ public class GameManager{
     fragment.showBot(bot);
     SoundManager.getSoundManager().changeBgm(bot);
     SoundManager.getSoundManager().changeSoundpool(bot);
-    
-    if(win == 0 && lose == 0){
-      fragment.showResult(bot.getName());
-    }
-    
+        
+
     gameThread = new Thread(new Runnable() {
       public void run() {
         gameIsRunning = true;
@@ -97,30 +89,25 @@ public class GameManager{
     fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result,stage.getId()));
     
     if(result == Result.WIN){
-      win +=1;
+      bot.setHitPoint(bot.getHitPoint()-1);
     }
     if(result == Result.LOSE){
-      lose +=1;
+      user.setHitPoint(user.getHitPoint()-1);
     }    
-    if(win == 2){
+    if(bot.getHitPoint() == 0){
     //  fragment.showResult("YOU WIN!!!");
       fragment.showPopup("you win!!!");
       SoundManager.getSoundManager().win();
-
-      win = 0;
-      lose = 0;      
+      
    //   sleep(1000);
       
       stage = StageManager.getManager().getStage(stage.getId()+1);      
     }
-    if(lose == 2){
+    if(user.getHitPoint() == 0){
      // fragment.showResult("YOU LOSE!!!");
       fragment.showPopup("you lose!!!");
       SoundManager.getSoundManager().lose();
-
-      
-      win = 0;
-      lose = 0;      
+     
   //    sleep(1000);
       
       BotListFragment fragment2 = new BotListFragment();

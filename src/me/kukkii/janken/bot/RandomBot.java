@@ -7,9 +7,10 @@ import me.kukkii.janken.R;
 import android.graphics.drawable.Drawable;
 
 public class RandomBot extends AbstractBot {
-
+  
   public RandomBot(){
     super();
+    hp = 3;
   }
 
   public RandomBot(long id, String name){
@@ -41,4 +42,6 @@ public class RandomBot extends AbstractBot {
   public int getPon(){
     return R.raw.janken;
   }
+  
+  
 }

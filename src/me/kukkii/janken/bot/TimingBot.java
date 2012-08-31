@@ -10,6 +10,7 @@ public class TimingBot extends AbstractBot {
 
   public TimingBot(){
     super();
+    hp = 3;
   }
 
   public TimingBot(long id, String name){
@@ -52,5 +53,6 @@ public class TimingBot extends AbstractBot {
   public int getPon(){
     return R.raw.janken;
   }
+  
 }
 

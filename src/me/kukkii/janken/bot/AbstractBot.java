@@ -12,6 +12,8 @@ import me.kukkii.janken.R;
 import android.graphics.drawable.Drawable;
 
 abstract public class AbstractBot extends AbstractPlayer {
+  
+  protected int hp;
 
   public AbstractBot() {
     super();
@@ -46,5 +48,6 @@ abstract public class AbstractBot extends AbstractPlayer {
   abstract public int getKen();
 
   abstract public int getPon();
+
 
 }

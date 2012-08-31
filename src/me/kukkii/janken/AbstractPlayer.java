@@ -11,6 +11,8 @@ abstract public class AbstractPlayer implements Player {
 
   protected long id;
   protected String name;
+  
+  protected int hp;
 
   public AbstractPlayer() {
     String s = getClass().getName();
@@ -60,6 +62,14 @@ abstract public class AbstractPlayer implements Player {
   public int hashCode() {
     // return new Long(id).hashCode();
     return name.hashCode();
+  }
+  
+  public void setHitPoint(int hp){
+    this.hp = hp;
+  }
+
+  public int getHitPoint(){
+    return hp;
   }
 
 }

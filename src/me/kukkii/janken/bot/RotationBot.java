@@ -10,6 +10,7 @@ public class RotationBot extends AbstractBot {
 
   public RotationBot(){
     super();
+    hp = 3;
   }
 
   public RotationBot(long id, String name){
@@ -46,4 +47,5 @@ public class RotationBot extends AbstractBot {
   public int getPon(){
     return R.raw.janken;
   }
+  
 }

@@ -21,4 +21,7 @@ public interface Player extends Serializable {
 
   public Hand hand2(Hand other);
 
+  public void setHitPoint(int hp);
+  
+  public int getHitPoint();
 }

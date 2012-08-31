@@ -10,6 +10,7 @@ public class Rock100Bot extends AbstractBot {
 
   public Rock100Bot(){
     super();
+    hp = 3;
   }
 
   public Rock100Bot(long id, String name){
@@ -40,4 +41,5 @@ public class Rock100Bot extends AbstractBot {
   public int getPon(){
     return R.raw.janken;
   }
+  
 }

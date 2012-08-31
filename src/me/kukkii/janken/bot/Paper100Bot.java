@@ -7,9 +7,10 @@ import android.graphics.drawable.Drawable;
 import me.kukkii.janken.R;
 
 public class Paper100Bot extends AbstractBot {
-
+  
   public Paper100Bot(){
     super();
+    hp = 3;
   }
 
   public Paper100Bot(long id, String name){
@@ -39,6 +40,14 @@ public class Paper100Bot extends AbstractBot {
 
   public int getPon(){
     return R.raw.janken;
+  }
+  
+  public void setHitPoint(int hp){
+    this.hp = hp;
+  }
+  
+  public int getHitPoint(){
+    return hp;
   }
 }
 

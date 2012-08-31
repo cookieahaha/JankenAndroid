@@ -10,6 +10,7 @@ public class Scissor100Bot extends AbstractBot {
 
   public Scissor100Bot(){
     super();
+    hp = 3;
   }
 
   public Scissor100Bot(long id, String name){
@@ -40,4 +41,5 @@ public class Scissor100Bot extends AbstractBot {
   public int getPon(){
     return R.raw.janken;
   }
+  
 }

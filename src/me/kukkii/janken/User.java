@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Properties;
 
 public class User extends AbstractPlayer{
-
+  
   public User() {
     try {
       Properties prop = new Properties();
@@ -25,6 +25,7 @@ public class User extends AbstractPlayer{
 
   public User(long id, String name){
     super(id, name);
+    hp = 3;
   }
 
   public int hand(){
