@@ -1,3 +1,4 @@
+//arj
 // $Id$
 
 package me.kukkii.janken;
