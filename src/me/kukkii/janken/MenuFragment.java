@@ -24,8 +24,6 @@ public class MenuFragment extends Fragment implements OnClickListener{
     super.onStart();
     Button button = (Button)getActivity().findViewById(R.id.button_back);
     button.setOnClickListener(this);
-    Button button2 = (Button)getActivity().findViewById(R.id.button_botlist);
-    button2.setOnClickListener(this);
   }
   
   public void onResume(){
@@ -46,23 +44,10 @@ public class MenuFragment extends Fragment implements OnClickListener{
     transaction.commit();
   }
   
-  public void startBotList(View view) {
-    BotListFragment fragment = new BotListFragment();
-    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-    transaction.replace(R.id.main_fragment, fragment);
-    transaction.addToBackStack(null);
-
-    // Commit the transaction
-    transaction.commit();
-  }
-  
   public void onClick(View view){
     int id = view.getId();
     if(id == R.id.button_back){
       startMain(view);
-    }
-    if(id == R.id.button_botlist){
-      startBotList(view);
     }
   }
 }

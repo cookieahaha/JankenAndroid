@@ -39,18 +39,12 @@ public class GameManager{
   }
   
   private void startGame(){
-    if(stage == null){   // random mode
-      bot =(AbstractBot) BotManager.getManager().next();
-     }
-     else{  // stage mode
-       bot = stage.getBot();
-     }
+    bot =(AbstractBot) BotManager.getManager().next();
     
     fragment.showBot(bot);
     SoundManager.getSoundManager().changeBgm(bot);
     SoundManager.getSoundManager().changeSoundpool(bot);
         
-
     gameThread = new Thread(new Runnable() {
       public void run() {
         gameIsRunning = true;
@@ -86,7 +80,9 @@ public class GameManager{
     }
     result = judge.judge(userHand, botHand);
     dataManager.writeResultToSQL(result);
-    fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result,stage.getId()));
+    
+    int stageId = stage.getId();
+    fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result,stageId));
     
     if(result == Result.WIN){
       bot.setHitPoint(bot.getHitPoint()-1);
@@ -110,7 +106,7 @@ public class GameManager{
      
   //    sleep(1000);
       
-      BotListFragment fragment2 = new BotListFragment();
+      MenuFragment fragment2 = new MenuFragment();
       FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
       transaction.replace(R.id.main_fragment, fragment2);
       transaction.addToBackStack(null);
