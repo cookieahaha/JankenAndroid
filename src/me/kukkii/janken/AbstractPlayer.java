@@ -13,7 +13,7 @@ abstract public class AbstractPlayer implements Player {
   protected long id;
   protected String name;
   
-  protected int hp;
+  protected int hp = 10;
 
   public AbstractPlayer() {
     String s = getClass().getName();

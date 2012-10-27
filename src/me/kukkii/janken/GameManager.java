@@ -27,12 +27,11 @@ public class GameManager{
   private Thread gameThread;
   
   private boolean gameIsRunning;
-  private Stage stage = null;
   
-  public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager, Stage stage) {
+  public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager) {
     this.fragment = activity;
     this.dataManager = dataManager;
-    this.stage = stage;
+    user = new User();
     judge = new Judge();
         
     startGame();
@@ -42,6 +41,8 @@ public class GameManager{
     bot =(AbstractBot) BotManager.getManager().next();
     
     fragment.showBot(bot);
+    fragment.showPopup(bot.getName());
+
     SoundManager.getSoundManager().changeBgm(bot);
     SoundManager.getSoundManager().changeSoundpool(bot);
         
@@ -81,31 +82,29 @@ public class GameManager{
     result = judge.judge(userHand, botHand);
     dataManager.writeResultToSQL(result);
     
-    int stageId = stage.getId();
-    fragment.showResult(dataManager.getResultAsString(bot,userHand,botHand,result,stageId));
-    
+    int damage = damage();
+   
     if(result == Result.WIN){
-      bot.setHitPoint(bot.getHitPoint()-1);
+      bot.setHitPoint(bot.getHitPoint()-damage);
+      fragment.showPopup("you hit " + damage + "!!!");
     }
     if(result == Result.LOSE){
-      user.setHitPoint(user.getHitPoint()-1);
+      user.setHitPoint(user.getHitPoint()-damage);
+      fragment.showPopup("bot hit " + damage + "!!!");
     }    
-    if(bot.getHitPoint() == 0){
+    if(bot.getHitPoint() < 0){
     //  fragment.showResult("YOU WIN!!!");
       fragment.showPopup("you win!!!");
       SoundManager.getSoundManager().win();
-      
+      user.setHitPoint(user.getHitPoint()+10);
+      startGame();
    //   sleep(1000);
-      
-      stage = StageManager.getManager().getStage(stage.getId()+1);      
     }
-    if(user.getHitPoint() == 0){
+    if(user.getHitPoint() < 0){
      // fragment.showResult("YOU LOSE!!!");
       fragment.showPopup("you lose!!!");
       SoundManager.getSoundManager().lose();
-     
   //    sleep(1000);
-      
       MenuFragment fragment2 = new MenuFragment();
       FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
       transaction.replace(R.id.main_fragment, fragment2);
@@ -113,6 +112,7 @@ public class GameManager{
       // Commit the transaction
       transaction.commit();
     }
+    fragment.showResult(dataManager.getResultAsString(user.getHitPoint(), bot.getHitPoint(),bot,userHand,botHand,result));
   }
 
   public void game() {
@@ -159,6 +159,10 @@ public class GameManager{
       }
     }
     startGame();
+  }
+
+  public int damage(){
+    return (int)(Math.random()*4)+2;
   }
 
   public void setUserHand(Hand hand){

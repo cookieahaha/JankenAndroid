@@ -20,12 +20,10 @@ public class User extends AbstractPlayer{
     catch (Exception e) {
       e.printStackTrace();
     }
-
   }
 
   public User(long id, String name){
     super(id, name);
-    hp = 3;
   }
 
   public int hand(){

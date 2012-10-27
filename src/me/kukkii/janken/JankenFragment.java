@@ -81,12 +81,8 @@ public class JankenFragment extends Fragment implements OnClickListener {
 
   public void onResume(){
     super.onResume();
-    Stage stage = null;  // random mode
     Bundle args = getArguments();
-    if(args != null){  // stage mode
-      stage = (Stage)args.getSerializable("stage");
-    }
-    gameManager = new GameManager(this, dataManager, stage);
+    gameManager = new GameManager(this, dataManager);
     
   }
 

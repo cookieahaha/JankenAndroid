@@ -10,7 +10,6 @@ public class Paper100Bot extends AbstractBot {
   
   public Paper100Bot(){
     super();
-    hp = 3;
   }
 
   public Paper100Bot(long id, String name){

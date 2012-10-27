@@ -52,33 +52,6 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     db.execSQL(CREATE_LOGTABLE);
     db.execSQL(CREATE_STAGESTATUS_TABLE);
   }
-
-  public void initStatus() {
-    insertStatus(1, StageStatus.CURRENT);
-    for (int id = 2; id <= NUM_STAGES; id++) {
-      insertStatus(id, StageStatus.LOCKED);
-    }
-  }
-
-  // for testing
-  public void initStatusForTest() {
-    for (int id = 1; id <= NUM_STAGES; id++) {
-      if (id < 7) {
-        if (id % 3 == 1) {
-          insertStatus(id, StageStatus.PERFECT);
-        }
-        else {
-          insertStatus(id, StageStatus.CLEARED);
-        }
-      }
-      else if (id == 7) {
-        insertStatus(id, StageStatus.CURRENT);
-      }
-      else {
-        insertStatus(id, StageStatus.LOCKED);
-      }
-    }
-  }
  
   @Override
   public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -122,76 +95,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     return history;
   }
 
-  public String getResultAsString(AbstractBot bot, Hand userHand, Hand botHand, Result result, int stageId){
-    String text = bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history(result) + "\n" + "Stage Id: " + stageId;
+  public String getResultAsString(int userHp, int botHp, AbstractBot bot, Hand userHand, Hand botHand, Result result){
+    String text = "userHp: " + userHp + "   botHP: " + botHp + "\n" + bot.getName() + ":" + userHand.toString() + ":" + botHand.toString() + ":" + result.toString() + "\n" + history(result) + "\n";
     return text;
-  }
-
-  public StageStatus[] getStageStatus() {
-    if (getStageStatus(1) == null) {
-      // initStatus();
-      initStatusForTest();
-    }
-    StageStatus[] status = new StageStatus[NUM_STAGES];
-    SQLiteDatabase radb = this.getReadableDatabase();
-    Cursor cursor = radb.query("stagestatustable", new String[] {"id", "status"}, null, null, null, null, null, null);
-    if (cursor == null) {
-      return status;
-    }
-    while(cursor.moveToNext()){
-      int id = cursor.getInt(0);
-      int st = cursor.getInt(1);
-      status[id - 1] = StageStatus.get(st);
-    }
-    return status;
-  }
-
-  public StageStatus getStageStatus(int id) {
-    SQLiteDatabase radb = this.getReadableDatabase();
-    int st = 0;
-    try {
-      Cursor cursor = radb.query("stagestatustable", new String[] {"id", "status"}, "id=?", new String[] { String.valueOf(id) }, null, null, null, null);
-
-      if (cursor == null) {
-        return null;
-      }
-      cursor.moveToFirst();
-      // int id = cursor.getInt(0);
-      st = cursor.getInt(1);
-    }
-    catch (Exception e) {
-      return null;
-    }
-    StageStatus stat  = StageStatus.get(st);
-    return stat;
-  }
-
-  public void updateStatus(int id, StageStatus stat) {
-    ContentValues values = new ContentValues();
-    // values.put("id", id);
-    values.put("status", stat.value());
-    mydb = this.getWritableDatabase();
-    mydb.update("stagestatustable", values, "id=?", new String[] { String.valueOf(id) });
-  }
-
-  public void insertStatus(int id, StageStatus stat) {
-    ContentValues values = new ContentValues();
-    values.put("id", id);
-    values.put("status", stat.value());
-    mydb = this.getWritableDatabase();
-    mydb.insert("stagestatustable", null, values);
-  }
-
-  public void setStatus(int id, StageStatus stat) {
-    updateStatus(id, stat);
-   /*
-    if (getStatus(id) == null) {
-      insertStatus(id, stat);
-    }
-    else {
-      updateStatus(id, stat);
-    }
-   */
   }
 
 }

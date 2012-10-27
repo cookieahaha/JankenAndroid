@@ -13,7 +13,7 @@ import android.graphics.drawable.Drawable;
 
 abstract public class AbstractBot extends AbstractPlayer {
   
-  protected int hp;
+  protected int hp = 10;
 
   public AbstractBot() {
     super();

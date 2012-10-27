@@ -10,7 +10,6 @@ public class RandomBot extends AbstractBot {
   
   public RandomBot(){
     super();
-    hp = 3;
   }
 
   public RandomBot(long id, String name){

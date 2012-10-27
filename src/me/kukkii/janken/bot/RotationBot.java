@@ -10,7 +10,6 @@ public class RotationBot extends AbstractBot {
 
   public RotationBot(){
     super();
-    hp = 3;
   }
 
   public RotationBot(long id, String name){
