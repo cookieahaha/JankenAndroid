@@ -49,7 +49,7 @@ public class GameManager{
     gameThread = new Thread(new Runnable() {
       public void run() {
         gameIsRunning = true;
-        game();
+        gamePerBot();
       }
     });
     gameThread.start();
@@ -92,26 +92,6 @@ public class GameManager{
       user.setHitPoint(user.getHitPoint()-damage);
       fragment.showPopup("bot hit " + damage + "!!!");
     }    
-    if(bot.getHitPoint() < 0){
-    //  fragment.showResult("YOU WIN!!!");
-      fragment.showPopup("you win!!!");
-      SoundManager.getSoundManager().win();
-      user.setHitPoint(user.getHitPoint()+10);
-      startGame();
-   //   sleep(1000);
-    }
-    if(user.getHitPoint() < 0){
-     // fragment.showResult("YOU LOSE!!!");
-      fragment.showPopup("you lose!!!");
-      SoundManager.getSoundManager().lose();
-  //    sleep(1000);
-      MenuFragment fragment2 = new MenuFragment();
-      FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
-      transaction.replace(R.id.main_fragment, fragment2);
-      transaction.addToBackStack(null);
-      // Commit the transaction
-      transaction.commit();
-    }
     fragment.showResult(dataManager.getResultAsString(user.getHitPoint(), bot.getHitPoint(),bot,userHand,botHand,result));
   }
 
@@ -158,7 +138,32 @@ public class GameManager{
         break;
       }
     }
-    startGame();
+  }
+
+  public void gamePerBot(){
+    while((user.getHitPoint() > 0) && (bot.getHitPoint() > 0)){
+      game();
+    }
+    if(bot.getHitPoint() <= 0){
+      //fragment.showResult("YOU WIN!!!");
+      fragment.showPopup("you win!!!");
+      SoundManager.getSoundManager().win();
+      user.setHitPoint(user.getHitPoint()+10);
+      startGame();
+      //sleep(1000);
+    }
+    if(user.getHitPoint() <= 0){
+      //fragment.showResult("YOU LOSE!!!");
+      fragment.showPopup("you lose!!!");
+      SoundManager.getSoundManager().lose();
+      //sleep(1000);
+      MenuFragment fragment2 = new MenuFragment();
+      FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
+      transaction.replace(R.id.main_fragment, fragment2);
+      transaction.addToBackStack(null);
+      //Commit the transaction
+      transaction.commit();
+    }
   }
 
   public int damage(){
