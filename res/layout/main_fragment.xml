@@ -6,6 +6,50 @@
     android:layout_height="fill_parent">
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="#ffffff">
+
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="fill_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1">
+
+              <ImageView android:id="@+id/view_userHealthBar"
+                  android:layout_weight="8"
+                  android:layout_height="fill_parent"
+                  android:layout_width="0dp"/>
+
+             <TextView android:id="@+id/userHealthText"
+                 android:layout_weight="2"
+                 android:layout_height="0dp"
+                 android:layout_width="fill_parent"/>
+       </LinearLayout>
+
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="fill_parent"
+           android:layout_height="0dp"
+           android:layout_weight="1">
+
+              <ImageView android:id="@+id/view_botHealthBar"
+                  android:layout_weight="8"
+                  android:layout_height="fill_parent"
+                  android:layout_width="0dp"/>
+
+             <TextView android:id="@+id/botHealthText"
+                 android:layout_weight="2"
+                 android:layout_height="0dp"
+                 android:layout_width="fill_parent"/>
+       </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
@@ -27,7 +71,7 @@
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="4">
+        android:layout_weight="2">
 
         <ImageButton android:id="@+id/button_ROCK"
             android:layout_height="fill_parent"

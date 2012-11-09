@@ -105,6 +105,28 @@ public class JankenFragment extends Fragment implements OnClickListener {
     });
   }
 
+  public void showUserHealthText(int userhealth){
+    final int userHealth = userhealth;
+    final String emptyString = "";
+    final TextView view = (TextView) activity.findViewById(R.id.userHealthText);
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        view.setText(emptyString + userHealth);
+      }
+    });
+  }
+
+  public void showBotHealthText(int bothealth){
+    final int botHealth = bothealth;
+    final String emptyString = "";
+    final TextView view = (TextView) activity.findViewById(R.id.botHealthText);
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        view.setText(emptyString + botHealth);
+      }
+    });
+  }
+
   public void showBot(AbstractBot bot){
     final int drawableId = bot.getImage();
     final ImageView view = (ImageView) activity.findViewById(R.id.view_BOT);
@@ -116,18 +138,18 @@ public class JankenFragment extends Fragment implements OnClickListener {
   }
 
   public void showJan(){
-    showMessage("Jan");
     SoundManager.getSoundManager().jan();
+    showPopup("Jan", 500);
   }
 
   public void showKen(){
-    showMessage("Ken");
     SoundManager.getSoundManager().ken();
+    showPopup("Ken", 500);
   }
     
   public void showPon(){
-    showMessage("Pon");
     SoundManager.getSoundManager().pon();
+    showPopup("Pon", 500);
   }
 
   public void onClick(View view){
@@ -166,7 +188,7 @@ public class JankenFragment extends Fragment implements OnClickListener {
     });
   }
   
-  public void showPopup(String string){
+  public void showPopup(String string, int time){
     final String string2 = string;
 
     activity.runOnUiThread(new Runnable() {
@@ -181,7 +203,7 @@ public class JankenFragment extends Fragment implements OnClickListener {
       }
     });
     try{
-      Thread.sleep(3000);
+      Thread.sleep(time);
     }
     catch (InterruptedException e){
     }

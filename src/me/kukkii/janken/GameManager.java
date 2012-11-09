@@ -41,7 +41,9 @@ public class GameManager{
     bot =(AbstractBot) BotManager.getManager().next();
     
     fragment.showBot(bot);
-    fragment.showPopup(bot.getName());
+    fragment.showPopup(bot.getName(), 1000);
+    fragment.showUserHealthText(user.getHitPoint());
+    fragment.showBotHealthText(bot.getHitPoint());
 
     SoundManager.getSoundManager().changeBgm(bot);
     SoundManager.getSoundManager().changeSoundpool(bot);
@@ -86,12 +88,14 @@ public class GameManager{
    
     if(result == Result.WIN){
       bot.setHitPoint(bot.getHitPoint()-damage);
-      fragment.showPopup("you hit " + damage + "!!!");
+      fragment.showPopup("you hit " + damage + "!!!", 700);
     }
     if(result == Result.LOSE){
       user.setHitPoint(user.getHitPoint()-damage);
-      fragment.showPopup("bot hit " + damage + "!!!");
+      fragment.showPopup("bot hit " + damage + "!!!", 700);
     }    
+    fragment.showUserHealthText(user.getHitPoint());
+    fragment.showBotHealthText(bot.getHitPoint());
     fragment.showResult(dataManager.getResultAsString(user.getHitPoint(), bot.getHitPoint(),bot,userHand,botHand,result));
   }
 
@@ -146,7 +150,7 @@ public class GameManager{
     }
     if(bot.getHitPoint() <= 0){
       //fragment.showResult("YOU WIN!!!");
-      fragment.showPopup("you win!!!");
+      fragment.showPopup("you win!!!", 700);
       SoundManager.getSoundManager().win();
       user.setHitPoint(user.getHitPoint()+10);
       startGame();
@@ -154,7 +158,7 @@ public class GameManager{
     }
     if(user.getHitPoint() <= 0){
       //fragment.showResult("YOU LOSE!!!");
-      fragment.showPopup("you lose!!!");
+      fragment.showPopup("you lose!!!", 700);
       SoundManager.getSoundManager().lose();
       //sleep(1000);
       MenuFragment fragment2 = new MenuFragment();
