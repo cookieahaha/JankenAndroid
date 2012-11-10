@@ -85,15 +85,41 @@ public class GameManager{
     dataManager.writeResultToSQL(result);
     
     int damage = damage();
-   
+
+//damagebot
+    if(bot.getName() == "DamageBot"){ 
+      user.setHitPoint(user.getHitPoint() - (int)(Math.random()*3+1));
+    }   
+
     if(result == Result.WIN){
       bot.setHitPoint(bot.getHitPoint()-damage);
       fragment.showPopup("you hit " + damage + "!!!", 700);
     }
     if(result == Result.LOSE){
-      user.setHitPoint(user.getHitPoint()-damage);
-      fragment.showPopup("bot hit " + damage + "!!!", 700);
+
+//damagebot2
+      if(bot.getName() == "DamageBot2"){
+        if(user.getHitPoint()%2 == 0){
+          user.setHitPoint(user.getHitPoint()-(damage*2));
+          fragment.showPopup("bot hit " + damage + "!!!", 700);
+        }
+      }
+      else{
+        user.setHitPoint(user.getHitPoint()-damage);
+        fragment.showPopup("bot hit " + damage + "!!!", 700);
+      }
     }    
+//healBot
+    if(bot.getName() == "HealBot"){
+      bot.setHitPoint(bot.getHitPoint() + 1);
+    }
+    
+//transferBot
+    if(bot.getName() == "TransferBot"){
+      user.setHitPoint(bot.getHitPoint());
+      bot.setHitPoint(user.getHitPoint());
+    }
+
     fragment.showUserHealthText(user.getHitPoint());
     fragment.showBotHealthText(bot.getHitPoint());
     fragment.showResult(dataManager.getResultAsString(user.getHitPoint(), bot.getHitPoint(),bot,userHand,botHand,result));
@@ -141,6 +167,11 @@ public class GameManager{
       if(result != Result.DRAW){
         break;
       }
+//DrawHealBot
+      if(bot.getName() == "DrawHealBot"){
+        bot.setHitPoint(10);
+      }
+
     }
   }
 
@@ -153,6 +184,11 @@ public class GameManager{
       fragment.showPopup("you win!!!", 700);
       SoundManager.getSoundManager().win();
       user.setHitPoint(user.getHitPoint()+10);
+//luckeyBot
+      if(bot.getName() == "LuckeyBot"){
+        user.setHitPoint(user.getHitPoint()+10);
+      }
+
       startGame();
       //sleep(1000);
     }

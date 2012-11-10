@@ -32,6 +32,12 @@ public class BotManager {
     add(new RotationBot());
     add(new RandomBot());
     add(new God());
+    add(new HealBot());
+    add(new DamageBot());
+    add(new TransferBot());
+    add(new DamageBot2());
+    add(new DrawHealBot());
+    add(new LuckeyBot());
   }
 
   private void add(Player bot) {
