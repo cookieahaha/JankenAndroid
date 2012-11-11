@@ -48,8 +48,8 @@ public class JankenFragment extends Fragment implements OnClickListener {
   private ImageButton button_scissor;
   private ImageButton button_paper;
   
-  private PopupWindow popupWindow;
-  
+  private PopupWindow[] popupWindows = new PopupWindow[16];
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       // Inflate the layout for this fragment
@@ -149,7 +149,7 @@ public class JankenFragment extends Fragment implements OnClickListener {
     
   public void showPon(){
     SoundManager.getSoundManager().pon();
-    showPopup("Pon", 500);
+    showPopup("Pon", 300);
   }
 
   public void onClick(View view){
@@ -192,30 +192,54 @@ public class JankenFragment extends Fragment implements OnClickListener {
     final String string2 = string;
     final int time2 = time;
     Thread th = new Thread(new Runnable(){
-      public void run(){
-        activity.runOnUiThread(new Runnable() {
-          public void run() {
-            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupView = inflater.inflate(R.layout.popup_view, (ViewGroup) activity.findViewById(R.id.popupWindow));
-            popupWindow = new PopupWindow(popupView, 300, 400, true);
-            popupWindow.showAtLocation(activity.findViewById(R.id.view_BOT), Gravity.CENTER, 0, 0);
-
-            TextView textView = (TextView) popupView.findViewById(R.id.popupText);
-            textView.setText(string2);
-          }
-        });
-        try{
-          Thread.sleep(time2);
-        }
-        catch (InterruptedException e){
-        }
-        activity.runOnUiThread(new Runnable() {
-          public void run(){
-            popupWindow.dismiss();
-          }
-        });
+      public void run() {
+        popup1(string2, time2);
       }
     });
     th.start(); 
+  }
+
+  private void popup1(String string, int time) {
+    final String string2 = string;
+    int n = -1;
+    while (n < 0) {
+      for (int i = 0; i < 16; i++) {
+        if (popupWindows[i] == null) {
+          n = i;
+          break;
+        }
+      }
+      if (n >= 0) {
+        break;
+      }
+      try {
+        Thread.sleep(100);
+      }
+      catch (InterruptedException e) {
+      }
+      continue;
+    }
+    final int index = n;
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popupView = inflater.inflate(R.layout.popup_view, (ViewGroup) activity.findViewById(R.id.popupWindow));
+        popupWindows[index] = new PopupWindow(popupView, 300, 400, true);
+        popupWindows[index].showAtLocation(activity.findViewById(R.id.view_BOT), Gravity.CENTER, 0, 0);
+        TextView textView = (TextView) popupView.findViewById(R.id.popupText);
+        textView.setText(string2);
+      }
+    });
+    try{
+      Thread.sleep(time);
+    }
+    catch (InterruptedException e){
+    }
+    activity.runOnUiThread(new Runnable() {
+      public void run(){
+        popupWindows[index].dismiss();
+        popupWindows[index] = null;
+      }
+    });
   }
 }

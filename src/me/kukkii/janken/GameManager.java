@@ -43,6 +43,7 @@ public class GameManager{
     
     fragment.showBot(bot);
     fragment.showPopup(bot.getName(), 1000);
+    sleep(1000);
     fragment.showUserHealthText(user.getHitPoint());
     fragment.showBotHealthText(bot.getHitPoint());
 
@@ -79,6 +80,7 @@ public class GameManager{
   }
 
   public void afterPon(){
+    sleep(300);
     if(!gameIsRunning){
       return;
     }
@@ -92,11 +94,13 @@ public class GameManager{
       int addDamage = (int)(Math.random()*3+1);
       user.setHitPoint(user.getHitPoint() - addDamage);
       fragment.showPopup("Bot hit " + damage + "!!!", 300);
+      sleep(300);
     }   
 
     if(result == Result.WIN){
       bot.setHitPoint(bot.getHitPoint()-damage);
       fragment.showPopup("you hit " + damage + "!!!", 700);
+      sleep(700);
     }
     if(result == Result.LOSE){
 
@@ -105,17 +109,20 @@ public class GameManager{
         if(user.getHitPoint()%2 == 0){
           user.setHitPoint(user.getHitPoint()-(damage*2));
           fragment.showPopup("bot hit " + damage + "!!!", 700);
+          sleep(700);
         }
       }
       else{
         user.setHitPoint(user.getHitPoint()-damage);
         fragment.showPopup("bot hit " + damage + "!!!", 700);
+        sleep(700);
       }
     }    
 //healBot
     if(bot.getName().equals("HealBot")){
       bot.setHitPoint(bot.getHitPoint() + 1);
       fragment.showPopup("Bot healed " + 1 + "HP!!!", 300);
+      sleep(300);
     }
     
 //transferBot
@@ -124,6 +131,7 @@ public class GameManager{
       user.setHitPoint(bot.getHitPoint());
       bot.setHitPoint(temp);
       fragment.showPopup("HP swapped!!!", 300);
+      sleep(300);
     }
 
     fragment.showUserHealthText(user.getHitPoint());
@@ -177,6 +185,7 @@ public class GameManager{
       if(bot.getName().equals("DrawHealBot")){
         bot.setHitPoint(10);
         fragment.showPopup("Bot Healed full HP!!!", 300);
+        sleep(300);
         fragment.showBotHealthText(bot.getHitPoint());
       }
 
@@ -190,6 +199,7 @@ public class GameManager{
     if(bot.getHitPoint() <= 0){
       //fragment.showResult("YOU WIN!!!");
       fragment.showPopup("you win!!!", 700);
+      sleep(700);
       SoundManager.getSoundManager().win();
       user.setHitPoint(user.getHitPoint()+10);
 //luckeyBot
@@ -203,6 +213,7 @@ public class GameManager{
     if(user.getHitPoint() <= 0){
       //fragment.showResult("YOU LOSE!!!");
       fragment.showPopup("you lose!!!", 700);
+      sleep(700);
       SoundManager.getSoundManager().lose();
       //sleep(1000);
       MenuFragment fragment2 = new MenuFragment();
