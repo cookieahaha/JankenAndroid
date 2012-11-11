@@ -190,29 +190,32 @@ public class JankenFragment extends Fragment implements OnClickListener {
   
   public void showPopup(String string, int time){
     final String string2 = string;
+    final int time2 = time;
+    Thread th = new Thread(new Runnable(){
+      public void run(){
+        activity.runOnUiThread(new Runnable() {
+          public void run() {
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View popupView = inflater.inflate(R.layout.popup_view, (ViewGroup) activity.findViewById(R.id.popupWindow));
+            popupWindow = new PopupWindow(popupView, 300, 400, true);
+            popupWindow.showAtLocation(activity.findViewById(R.id.view_BOT), Gravity.CENTER, 0, 0);
 
-    activity.runOnUiThread(new Runnable() {
-      public void run() {
-        LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popupView = inflater.inflate(R.layout.popup_view, (ViewGroup) activity.findViewById(R.id.popupWindow));
-        popupWindow = new PopupWindow(popupView, 300, 400, true);
-        popupWindow.showAtLocation(activity.findViewById(R.id.view_BOT), Gravity.CENTER, 0, 0);
-
-        TextView textView = (TextView) popupView.findViewById(R.id.popupText);
-        textView.setText(string2);
+            TextView textView = (TextView) popupView.findViewById(R.id.popupText);
+            textView.setText(string2);
+          }
+        });
+        try{
+          Thread.sleep(time2);
+        }
+        catch (InterruptedException e){
+        }
+        activity.runOnUiThread(new Runnable() {
+          public void run(){
+            popupWindow.dismiss();
+          }
+        });
       }
     });
-    try{
-      Thread.sleep(time);
-    }
-    catch (InterruptedException e){
-    }
-    activity.runOnUiThread(new Runnable() {
-      public void run() {
-        popupWindow.dismiss();
-      }
-    });
+    th.start(); 
   }
-
-
 }

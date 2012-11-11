@@ -39,6 +39,7 @@ public class GameManager{
   
   private void startGame(){
     bot =(AbstractBot) BotManager.getManager().next();
+    bot.setHitPoint(10);
     
     fragment.showBot(bot);
     fragment.showPopup(bot.getName(), 1000);
@@ -87,8 +88,10 @@ public class GameManager{
     int damage = damage();
 
 //damagebot
-    if(bot.getName() == "DamageBot"){ 
-      user.setHitPoint(user.getHitPoint() - (int)(Math.random()*3+1));
+    if(bot.getName().equals("DamageBot")){
+      int addDamage = (int)(Math.random()*3+1);
+      user.setHitPoint(user.getHitPoint() - addDamage);
+      fragment.showPopup("Bot hit " + damage + "!!!", 300);
     }   
 
     if(result == Result.WIN){
@@ -98,7 +101,7 @@ public class GameManager{
     if(result == Result.LOSE){
 
 //damagebot2
-      if(bot.getName() == "DamageBot2"){
+      if(bot.getName().equals("DamageBot2")){
         if(user.getHitPoint()%2 == 0){
           user.setHitPoint(user.getHitPoint()-(damage*2));
           fragment.showPopup("bot hit " + damage + "!!!", 700);
@@ -110,14 +113,17 @@ public class GameManager{
       }
     }    
 //healBot
-    if(bot.getName() == "HealBot"){
+    if(bot.getName().equals("HealBot")){
       bot.setHitPoint(bot.getHitPoint() + 1);
+      fragment.showPopup("Bot healed " + 1 + "HP!!!", 300);
     }
     
 //transferBot
-    if(bot.getName() == "TransferBot"){
+    if(bot.getName().equals("TransferBot")){
+      int temp = user.getHitPoint();
       user.setHitPoint(bot.getHitPoint());
-      bot.setHitPoint(user.getHitPoint());
+      bot.setHitPoint(temp);
+      fragment.showPopup("HP swapped!!!", 300);
     }
 
     fragment.showUserHealthText(user.getHitPoint());
@@ -168,8 +174,10 @@ public class GameManager{
         break;
       }
 //DrawHealBot
-      if(bot.getName() == "DrawHealBot"){
+      if(bot.getName().equals("DrawHealBot")){
         bot.setHitPoint(10);
+        fragment.showPopup("Bot Healed full HP!!!", 300);
+        fragment.showBotHealthText(bot.getHitPoint());
       }
 
     }
@@ -185,7 +193,7 @@ public class GameManager{
       SoundManager.getSoundManager().win();
       user.setHitPoint(user.getHitPoint()+10);
 //luckeyBot
-      if(bot.getName() == "LuckeyBot"){
+      if(bot.getName().equals("LuckeyBot")){
         user.setHitPoint(user.getHitPoint()+10);
       }
 
