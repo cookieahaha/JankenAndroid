@@ -139,17 +139,17 @@ public class JankenFragment extends Fragment implements OnClickListener {
 
   public void showJan(){
     SoundManager.getSoundManager().jan();
-    showPopup("Jan", 500);
+    showPopupInThread("Jan", 500);
   }
 
   public void showKen(){
     SoundManager.getSoundManager().ken();
-    showPopup("Ken", 500);
+    showPopupInThread("Ken", 500);
   }
     
   public void showPon(){
     SoundManager.getSoundManager().pon();
-    showPopup("Pon", 300);
+    showPopupInThread("Pon", 300);
   }
 
   public void onClick(View view){
@@ -188,18 +188,18 @@ public class JankenFragment extends Fragment implements OnClickListener {
     });
   }
   
-  public void showPopup(String string, int time){
+  public void showPopupInThread(String string, int time){
     final String string2 = string;
     final int time2 = time;
     Thread th = new Thread(new Runnable(){
       public void run() {
-        popup1(string2, time2);
+        showPopup(string2, time2);
       }
     });
     th.start(); 
   }
 
-  private void popup1(String string, int time) {
+  public void showPopup(String string, int time){
     final String string2 = string;
     int n = -1;
     while (n < 0) {
