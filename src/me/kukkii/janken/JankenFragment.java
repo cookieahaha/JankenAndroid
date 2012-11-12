@@ -24,6 +24,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -105,24 +106,45 @@ public class JankenFragment extends Fragment implements OnClickListener {
     });
   }
 
-  public void showUserHealthText(int userhealth){
-    final int userHealth = userhealth;
-    final String emptyString = "";
-    final TextView view = (TextView) activity.findViewById(R.id.userHealthText);
+  public void setMaxHP(int userhealth, int bothealth) {
+    final int max = (userhealth >= bothealth) ? userhealth : bothealth;
+    final ProgressBar bar1 = (ProgressBar) activity.findViewById(R.id.view_userHealthBar);
+    final ProgressBar bar2 = (ProgressBar) activity.findViewById(R.id.view_botHealthBar);
     activity.runOnUiThread(new Runnable() {
       public void run() {
-        view.setText(emptyString + userHealth);
+        bar1.setMax(max);
+        bar2.setMax(max);
       }
     });
   }
 
-  public void showBotHealthText(int bothealth){
-    final int botHealth = bothealth;
-    final String emptyString = "";
-    final TextView view = (TextView) activity.findViewById(R.id.botHealthText);
+  public void setHP(int userhealth, int bothealth) {
+    showUserHealth(userhealth);
+    showBotHealth(bothealth);
+  }
+
+  public void showUserHealth(int userhealth){
+    final int health = (userhealth >= 0) ? userhealth : 0;;
+    final String text = String.format("%4d", health);
+    final TextView view = (TextView) activity.findViewById(R.id.userHealthText);
+    final ProgressBar bar = (ProgressBar) activity.findViewById(R.id.view_userHealthBar);
     activity.runOnUiThread(new Runnable() {
       public void run() {
-        view.setText(emptyString + botHealth);
+        view.setText(text);
+        bar.setProgress(health);
+      }
+    });
+  }
+
+  public void showBotHealth(int bothealth){
+    final int health = (bothealth >= 0) ? bothealth : 0;
+    final String text = String.format("%4d", health);
+    final TextView view = (TextView) activity.findViewById(R.id.botHealthText);
+    final ProgressBar bar = (ProgressBar) activity.findViewById(R.id.view_botHealthBar);
+    activity.runOnUiThread(new Runnable() {
+      public void run() {
+        view.setText(text);
+        bar.setProgress(health);
       }
     });
   }

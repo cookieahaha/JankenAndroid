@@ -43,8 +43,10 @@ public class GameManager{
     
     fragment.showBot(bot);
     fragment.showPopup(bot.getName(), 1000);
-    fragment.showUserHealthText(user.getHitPoint());
-    fragment.showBotHealthText(bot.getHitPoint());
+    fragment.setMaxHP(user.getHitPoint(), bot.getHitPoint());
+    fragment.setHP(user.getHitPoint(), bot.getHitPoint());
+    // fragment.showUserHealthText(user.getHitPoint());
+    // fragment.showBotHealthText(bot.getHitPoint());
 
     SoundManager.getSoundManager().changeBgm(bot);
     SoundManager.getSoundManager().changeSoundpool(bot);
@@ -127,8 +129,9 @@ public class GameManager{
       fragment.showPopup("HP swapped!!!", 300);
     }
 
-    fragment.showUserHealthText(user.getHitPoint());
-    fragment.showBotHealthText(bot.getHitPoint());
+    fragment.setHP(user.getHitPoint(), bot.getHitPoint());
+    // fragment.showUserHealthText(user.getHitPoint());
+    // fragment.showBotHealthText(bot.getHitPoint());
     fragment.showResult(dataManager.getResultAsString(user.getHitPoint(), bot.getHitPoint(),bot,userHand,botHand,result));
   }
 
@@ -178,7 +181,7 @@ public class GameManager{
       if(bot.getName().equals("DrawHealBot")){
         bot.setHitPoint(10);
         fragment.showPopup("Bot Healed full HP!!!", 300);
-        fragment.showBotHealthText(bot.getHitPoint());
+        fragment.showBotHealth(bot.getHitPoint());
       }
 
     }
