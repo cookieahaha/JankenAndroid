@@ -81,6 +81,8 @@ public class GameManager implements Runnable{
     
     int damage = damage();
 
+    bot.applyAbilitiesAfterPon(this);
+
 //damagebot
     if(bot.getName().equals("DamageBot")){
       int addDamage = (int)(Math.random()*3+1);
@@ -106,11 +108,6 @@ public class GameManager implements Runnable{
         fragment.showPopup("bot hit " + damage + "!!!", 700);
       }
     }    
-//healBot
-    if(bot.getName().equals("HealBot")){
-      bot.setHitPoint(bot.getHitPoint() + 1);
-      fragment.showPopup("Bot healed " + 1 + "HP!!!", 300);
-    }
     
 //transferBot
     if(bot.getName().equals("TransferBot")){
@@ -228,8 +225,35 @@ public class GameManager implements Runnable{
   }
  
   public void killGameThread(){
- //   gameThread.stop();
+    //gameThread.stop();
     gameIsRunning = false;
   }
     
+  public Judge getJudge(){
+    return judge;
+  }
+
+  public User getUser(){
+    return user;
+  }
+
+  public AbstractBot getBot(){
+    return bot;
+  }
+
+  public Hand getUserHand(){
+    return userHand;
+  }
+
+  public Hand getBotHand(){
+    return botHand;
+  }
+
+  public Result getResult(){
+    return result;
+  }
+
+  public JankenFragment getFragment(){
+    return fragment;
+  }
 }

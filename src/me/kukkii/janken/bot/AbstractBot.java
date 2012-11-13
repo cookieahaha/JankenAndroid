@@ -10,10 +10,15 @@ import me.kukkii.janken.Player;
 import me.kukkii.janken.R;
 //import me.kukkii.janken.gui.ImageManager;
 import android.graphics.drawable.Drawable;
+import java.util.List;
+import java.util.ArrayList;
+import me.kukkii.janken.ability.Ability;
+import me.kukkii.janken.GameManager;
 
 abstract public class AbstractBot extends AbstractPlayer {
   
   protected int hp = 10;
+  List<Ability> abilityList;
 
   public AbstractBot() {
     super();
@@ -49,5 +54,14 @@ abstract public class AbstractBot extends AbstractPlayer {
 
   abstract public int getPon();
 
+  public void addAbility(Ability ability){
+    abilityList = new ArrayList<Ability>();
+    abilityList.add(ability);
+  }
 
+  public void applyAbilitiesAfterPon(GameManager gm){
+    for(Ability ability : abilityList){
+      ability.applyAfterPon(gm);
+    }
+  }
 }

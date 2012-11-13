@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import me.kukkii.janken.Player;
+import me.kukkii.janken.ability.HealAbility;
+
 
 public class BotManager {
 
@@ -26,18 +28,19 @@ public class BotManager {
     bots = new ArrayList<Player>();
     map = new HashMap<String, Player>();
     add(new TimingBot());
+/*
     add(new Rock100Bot());
     add(new Scissor100Bot());
     add(new Paper100Bot());
     add(new RotationBot());
     add(new RandomBot());
     add(new God());
-    add(new HealBot());
     add(new DamageBot());
     add(new TransferBot());
     add(new DamageBot2());
     add(new DrawHealBot());
     add(new LuckeyBot());
+*/
   }
 
   private void add(Player bot) {
@@ -46,7 +49,11 @@ public class BotManager {
   }
 
   public Player next() {
-    return bots.get( (int)(Math.random() * bots.size()) );
+    AbstractBot bot = (AbstractBot) bots.get( (int)(Math.random() * bots.size()) );
+    HealAbility h = new HealAbility();
+    bot.addAbility(h);
+    return bot;
+ //   return bots.get( (int)(Math.random() * bots.size()) );
   }
 
   public Player getBot(String name) {
