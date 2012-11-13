@@ -84,7 +84,8 @@ public class JankenFragment extends Fragment implements OnClickListener {
     super.onResume();
     Bundle args = getArguments();
     gameManager = new GameManager(this, dataManager);
-    
+    Thread t = new Thread(gameManager);
+    t.start(); 
   }
 
   public void onPause(){

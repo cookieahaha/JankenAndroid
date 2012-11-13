@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import me.kukkii.janken.bot.AbstractBot;
 import me.kukkii.janken.bot.BotManager;
 
-public class GameManager{
+public class GameManager implements Runnable{
 
   private JankenFragment fragment;
   private MySQLiteOpenHelper dataManager;
@@ -31,33 +31,24 @@ public class GameManager{
   public GameManager(JankenFragment activity, MySQLiteOpenHelper dataManager) {
     this.fragment = activity;
     this.dataManager = dataManager;
-    user = new User();
-    judge = new Judge();
-        
-    startGame();
   }
   
-  private void startGame(){
-    bot =(AbstractBot) BotManager.getManager().next();
-    bot.setHitPoint(10);
+  public void run(){
+    user = new User();
+    judge = new Judge();
     
-    fragment.showBot(bot);
-    fragment.showPopup(bot.getName(), 1000);
-    fragment.setMaxHP(user.getHitPoint(), bot.getHitPoint());
-    fragment.setHP(user.getHitPoint(), bot.getHitPoint());
-    // fragment.showUserHealthText(user.getHitPoint());
-    // fragment.showBotHealthText(bot.getHitPoint());
-
-    SoundManager.getSoundManager().changeBgm(bot);
-    SoundManager.getSoundManager().changeSoundpool(bot);
         
-    gameThread = new Thread(new Runnable() {
-      public void run() {
-        gameIsRunning = true;
-        gamePerBot();
-      }
-    });
-    gameThread.start();
+    gameIsRunning = true;
+  
+    while(user.getHitPoint() > 0){
+      gamePerBot();
+    } 
+    MenuFragment fragment2 = new MenuFragment();
+    FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.main_fragment, fragment2);
+    transaction.addToBackStack(null);
+    //Commit the transaction
+    transaction.commit();
   }
 
   public void sleep(int msec) {
@@ -188,6 +179,19 @@ public class GameManager{
   }
 
   public void gamePerBot(){
+    bot =(AbstractBot) BotManager.getManager().next();
+    bot.setHitPoint(10);
+ 
+    fragment.showBot(bot);
+    fragment.showPopup(bot.getName(), 1000);
+    fragment.setMaxHP(user.getHitPoint(), bot.getHitPoint());
+    fragment.setHP(user.getHitPoint(), bot.getHitPoint());
+    // fragment.showUserHealthText(user.getHitPoint());
+    // fragment.showBotHealthText(bot.getHitPoint());
+
+    SoundManager.getSoundManager().changeBgm(bot);
+    SoundManager.getSoundManager().changeSoundpool(bot);
+ 
     while((user.getHitPoint() > 0) && (bot.getHitPoint() > 0)){
       game();
     }
@@ -200,8 +204,6 @@ public class GameManager{
       if(bot.getName().equals("LuckeyBot")){
         user.setHitPoint(user.getHitPoint()+10);
       }
-
-      startGame();
       //sleep(1000);
     }
     if(user.getHitPoint() <= 0){
@@ -209,12 +211,6 @@ public class GameManager{
       fragment.showPopup("you lose!!!", 700);
       SoundManager.getSoundManager().lose();
       //sleep(1000);
-      MenuFragment fragment2 = new MenuFragment();
-      FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
-      transaction.replace(R.id.main_fragment, fragment2);
-      transaction.addToBackStack(null);
-      //Commit the transaction
-      transaction.commit();
     }
   }
 
