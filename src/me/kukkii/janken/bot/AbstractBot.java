@@ -64,4 +64,11 @@ abstract public class AbstractBot extends AbstractPlayer {
       ability.applyAfterPon(gm);
     }
   }
+
+  public void applyAbilitiesEnd(GameManager gm){
+    for(Ability ability : abilityList){
+      ability.applyEnd(gm);
+    }
+  }
+
 }

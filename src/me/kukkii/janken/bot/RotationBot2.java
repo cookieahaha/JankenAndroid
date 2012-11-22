@@ -1,26 +1,31 @@
 // $Id$
 
 package me.kukkii.janken.bot;
-
+import android.graphics.drawable.Drawable;
 import me.kukkii.janken.R;
 
-import android.graphics.drawable.Drawable;
+public class RotationBot2 extends AbstractBot {
 
-public class RandomBot extends AbstractBot {
-  
-  public RandomBot(){
+  private int prevHand = -1;
+
+  public RotationBot2(){
     super();
   }
 
-  public RandomBot(long id, String name){
+  public RotationBot2(long id, String name){
     super(id, name);
   }
 
   public int hand(){
-    int bot = (int)(Math.random()*3);
-    return bot;
+    if (prevHand < 0) {
+      prevHand = (int)(Math.random()*3);
+    }
+    else {
+      prevHand = (prevHand + 1) % 3;
+    }
+    return prevHand;
   }
-
+ 
   public int getImage(){
     return R.drawable.girl_yellow2;
   }
@@ -41,6 +46,5 @@ public class RandomBot extends AbstractBot {
   public int getPon(){
     return R.raw.janken;
   }
-  
   
 }

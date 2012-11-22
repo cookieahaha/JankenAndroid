@@ -16,6 +16,8 @@ public class GameManager implements Runnable{
   private Hand userHand;
   private Hand botHand;
   private Result result;
+  private int damage;
+  private int winAmount;
 
   private static final int timeJan = 2000;
   private static final int timeKen = 1000;
@@ -36,12 +38,13 @@ public class GameManager implements Runnable{
   public void run(){
     user = new User();
     judge = new Judge();
-    
-        
+          
     gameIsRunning = true;
-  
+    winAmount = 0;
+
     while(user.getHitPoint() > 0){
       gamePerBot();
+      winAmount += 1;
     } 
     MenuFragment fragment2 = new MenuFragment();
     FragmentTransaction transaction = fragment.getActivity().getSupportFragmentManager().beginTransaction();
@@ -79,44 +82,19 @@ public class GameManager implements Runnable{
     result = judge.judge(userHand, botHand);
     dataManager.writeResultToSQL(result);
     
-    int damage = damage();
+    damage = damage();
 
     bot.applyAbilitiesAfterPon(this);
-
-//damagebot
-    if(bot.getName().equals("DamageBot")){
-      int addDamage = (int)(Math.random()*3+1);
-      user.setHitPoint(user.getHitPoint() - addDamage);
-      fragment.showPopup("Bot hit " + damage + "!!!", 300);
-    }   
 
     if(result == Result.WIN){
       bot.setHitPoint(bot.getHitPoint()-damage);
       fragment.showPopup("you hit " + damage + "!!!", 700);
     }
     if(result == Result.LOSE){
-
-//damagebot2
-      if(bot.getName().equals("DamageBot2")){
-        if(user.getHitPoint()%2 == 0){
-          user.setHitPoint(user.getHitPoint()-(damage*2));
-          fragment.showPopup("bot hit " + damage + "!!!", 700);
-        }
-      }
-      else{
-        user.setHitPoint(user.getHitPoint()-damage);
-        fragment.showPopup("bot hit " + damage + "!!!", 700);
-      }
+      user.setHitPoint(user.getHitPoint()-damage);
+      fragment.showPopup("bot hit " + damage + "!!!", 700);
     }    
     
-//transferBot
-    if(bot.getName().equals("TransferBot")){
-      int temp = user.getHitPoint();
-      user.setHitPoint(bot.getHitPoint());
-      bot.setHitPoint(temp);
-      fragment.showPopup("HP swapped!!!", 300);
-    }
-
     fragment.setHP(user.getHitPoint(), bot.getHitPoint());
     // fragment.showUserHealthText(user.getHitPoint());
     // fragment.showBotHealthText(bot.getHitPoint());
@@ -165,18 +143,11 @@ public class GameManager implements Runnable{
       if(result != Result.DRAW){
         break;
       }
-//DrawHealBot
-      if(bot.getName().equals("DrawHealBot")){
-        bot.setHitPoint(10);
-        fragment.showPopup("Bot Healed full HP!!!", 300);
-        fragment.showBotHealth(bot.getHitPoint());
-      }
-
     }
   }
 
   public void gamePerBot(){
-    bot =(AbstractBot) BotManager.getManager().next();
+    bot =(AbstractBot) BotManager.getManager().next(winAmount);
     bot.setHitPoint(10);
  
     fragment.showBot(bot);
@@ -197,10 +168,7 @@ public class GameManager implements Runnable{
       fragment.showPopup("you win!!!", 700);
       SoundManager.getSoundManager().win();
       user.setHitPoint(user.getHitPoint()+10);
-//luckeyBot
-      if(bot.getName().equals("LuckeyBot")){
-        user.setHitPoint(user.getHitPoint()+10);
-      }
+      bot.applyAbilitiesEnd(this);
       //sleep(1000);
     }
     if(user.getHitPoint() <= 0){
@@ -256,4 +224,9 @@ public class GameManager implements Runnable{
   public JankenFragment getFragment(){
     return fragment;
   }
+
+  public int getDamage(){
+    return damage;
+  }
+
 }
