@@ -49,7 +49,6 @@ public class BotManager {
   private void addLvl2(){
     add(new RotationBot2());
     add(new TimingBot2());
-    add(new God());
     add(new RandomBot());
   }
 
